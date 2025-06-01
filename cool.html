@@ -2,30 +2,32 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
-    <title>AI Sales Assistant</title>
+    <title>VITA – AI Assistant für LaVITA</title>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f9fafa;
+            background-color: #f4f6f9;
             margin: 0;
             padding: 2em;
-            color: #333;
+            color: #1d3557; /* Marineblau */
         }
 
-        .banner img {
-            display: block;
+        header {
+            text-align: center;
+            padding: 20px;
+            background-color: #1d3557;
+        }
+
+        header img {
             max-width: 100%;
             height: auto;
-            margin: 0 auto 2em auto;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         }
 
         form {
             display: flex;
             justify-content: center;
             gap: 0.5em;
-            margin-bottom: 1.5em;
+            margin: 2em auto;
             flex-wrap: wrap;
         }
 
@@ -40,13 +42,13 @@
         }
 
         input[name="message"]:focus {
-            border-color: #00aa99;
+            border-color: #1d3557;
             outline: none;
         }
 
         button {
             padding: 0.7em 1.5em;
-            background-color: #00aa99;
+            background-color: #1d3557;
             color: white;
             border: none;
             border-radius: 8px;
@@ -56,18 +58,26 @@
         }
 
         button:hover {
-            background-color: #008f85;
+            background-color: #16304a;
         }
 
-        .response {
+        .chat-box {
             max-width: 600px;
-            margin: 1em auto;
-            padding: 1em;
-            background-color: #e6f7f5;
-            border-left: 4px solid #00aa99;
+            margin: 0 auto;
+            background-color: #eaf0f7;
+            border-left: 4px solid #1d3557;
             border-radius: 6px;
-            font-size: 1.1em;
-            line-height: 1.5em;
+            padding: 1em;
+            margin-bottom: 1em;
+        }
+
+        .chat-box strong {
+            color: #1d3557;
+        }
+
+        a {
+            color: #1d3557;
+            text-decoration: underline;
         }
 
         @media (max-width: 600px) {
@@ -84,37 +94,42 @@
 </head>
 <body>
 
-    <!-- Banner-Bild -->
-    <div class="banner">
-        <img src="banner.png" alt="VITA Banner">
-    </div>
+    <!-- Banner statt Text-Überschrift -->
+    <header>
+        <img src="banner.png" alt="VITA – entwickelt von Team AIM für LaVITA">
+    </header>
 
-    <!-- Chat-Formular -->
+    <!-- Eingabeformular -->
     <form onsubmit="handleSubmit(event)">
         <input type="text" name="message" id="message" placeholder="Gib deine Frage ein..." required>
         <button type="submit">Senden</button>
     </form>
 
-    <!-- Antwortcontainer -->
+    <!-- Antwortbereich -->
     <div id="responseContainer"></div>
 
-    <!-- Simulierte Antwort-Logik -->
+    <!-- JavaScript für einfache KI-Interaktion -->
     <script>
         function handleSubmit(event) {
             event.preventDefault();
+
             const input = document.getElementById("message");
             const responseContainer = document.getElementById("responseContainer");
 
             const userMessage = input.value;
             input.value = "";
 
-            const response = `Simulierte Antwort auf: '${userMessage}'`;
+            // Beispielantwort mit Quicklink
+            const simulatedResponse = "Hier sind die relevanten Daten: ";
+            const quicklink = "<a href='https://deine-datenbank.de/eintrag?id=123' target='_blank'>Zum Datensatz öffnen</a>";
 
-            const responseBox = document.createElement("div");
-            responseBox.className = "response";
-            responseBox.innerHTML = `<strong>AI:</strong> ${response}`;
-
-            responseContainer.appendChild(responseBox);
+            // Ausgabe ersetzen (nur eine Antwort sichtbar)
+            responseContainer.innerHTML = `
+                <div class="chat-box">
+                    <p><strong>Frage:</strong> ${userMessage}</p>
+                    <p><strong>Antwort:</strong> ${simulatedResponse}${quicklink}</p>
+                </div>
+            `;
         }
     </script>
 
