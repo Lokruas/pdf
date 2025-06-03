@@ -12,21 +12,20 @@
             color: #333;
         }
 
-        /* Banner-Hintergrund */
+        /* Bannerbereich mit farbigem Rechteck */
         .banner-container {
             background-color: #FCFCF9;
-            padding: 2em;
+            height: 140px; /* definierte Höhe */
+            display: flex;
+            justify-content: center;
+            align-items: center;
             border-radius: 12px;
             margin-bottom: 2em;
         }
 
         .banner img {
-            display: block;
-            max-width: 100%;
-            height: auto;
-            margin: 0 auto;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            height: 80px; /* deutlich kleineres Bild */
+            object-fit: contain;
         }
 
         form {
@@ -92,11 +91,9 @@
 </head>
 <body>
 
-    <!-- Bannerbereich mit Hintergrundfarbe -->
+    <!-- Rechteck + zentriertes Bannerbild -->
     <div class="banner-container">
-        <div class="banner">
-            <img src="banner.png" alt="VITA Banner">
-        </div>
+        <img src="banner.png" alt="VITA Banner" class="banner">
     </div>
 
     <!-- Chat-Formular -->
@@ -108,7 +105,6 @@
     <!-- Antwortanzeige -->
     <div id="responseContainer"></div>
 
-    <!-- Einfaches Antwort-Skript -->
     <script>
         function handleSubmit(event) {
             event.preventDefault();
