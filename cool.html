@@ -2,32 +2,38 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
-    <title>VITA – AI Assistant für LaVITA</title>
+    <title>AI Sales Assistant</title>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f4f6f9;
+            background-color: #f9fafa;
             margin: 0;
             padding: 2em;
-            color: #1d3557; /* Marineblau */
+            color: #333;
         }
 
-        header {
-            text-align: center;
-            padding: 20px;
-            background-color: #1d3557;
+        /* Banner-Hintergrund */
+        .banner-container {
+            background-color: #FCFCF9;
+            padding: 2em;
+            border-radius: 12px;
+            margin-bottom: 2em;
         }
 
-        header img {
+        .banner img {
+            display: block;
             max-width: 100%;
             height: auto;
+            margin: 0 auto;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
         }
 
         form {
             display: flex;
             justify-content: center;
             gap: 0.5em;
-            margin: 2em auto;
+            margin-bottom: 1.5em;
             flex-wrap: wrap;
         }
 
@@ -42,13 +48,13 @@
         }
 
         input[name="message"]:focus {
-            border-color: #1d3557;
+            border-color: #00aa99;
             outline: none;
         }
 
         button {
             padding: 0.7em 1.5em;
-            background-color: #1d3557;
+            background-color: #00aa99;
             color: white;
             border: none;
             border-radius: 8px;
@@ -58,26 +64,18 @@
         }
 
         button:hover {
-            background-color: #16304a;
+            background-color: #008f85;
         }
 
-        .chat-box {
+        .response {
             max-width: 600px;
-            margin: 0 auto;
-            background-color: #eaf0f7;
-            border-left: 4px solid #1d3557;
-            border-radius: 6px;
+            margin: 1em auto;
             padding: 1em;
-            margin-bottom: 1em;
-        }
-
-        .chat-box strong {
-            color: #1d3557;
-        }
-
-        a {
-            color: #1d3557;
-            text-decoration: underline;
+            background-color: #e6f7f5;
+            border-left: 4px solid #00aa99;
+            border-radius: 6px;
+            font-size: 1.1em;
+            line-height: 1.5em;
         }
 
         @media (max-width: 600px) {
@@ -94,45 +92,39 @@
 </head>
 <body>
 
-    <!-- Banner statt Text-Überschrift -->
-    <header>
-        <header>
-    <img src="banner.png" alt="VITA – entwickelt von Team AIM für LaVITA" style="max-width: 500px; width: 100%; height: auto; display: block; margin: 0 auto;">
-</header>
+    <!-- Bannerbereich mit Hintergrundfarbe -->
+    <div class="banner-container">
+        <div class="banner">
+            <img src="banner.png" alt="VITA Banner">
+        </div>
+    </div>
 
-    </header>
-
-    <!-- Eingabeformular -->
+    <!-- Chat-Formular -->
     <form onsubmit="handleSubmit(event)">
         <input type="text" name="message" id="message" placeholder="Gib deine Frage ein..." required>
         <button type="submit">Senden</button>
     </form>
 
-    <!-- Antwortbereich -->
+    <!-- Antwortanzeige -->
     <div id="responseContainer"></div>
 
-    <!-- JavaScript für einfache KI-Interaktion -->
+    <!-- Einfaches Antwort-Skript -->
     <script>
         function handleSubmit(event) {
             event.preventDefault();
-
             const input = document.getElementById("message");
             const responseContainer = document.getElementById("responseContainer");
 
             const userMessage = input.value;
             input.value = "";
 
-            // Beispielantwort mit Quicklink
-            const simulatedResponse = "Hier sind die relevanten Daten: ";
-            const quicklink = "<a href='https://deine-datenbank.de/eintrag?id=123' target='_blank'>Zum Datensatz öffnen</a>";
+            const response = `Simulierte Antwort auf: '${userMessage}'`;
 
-            // Ausgabe ersetzen (nur eine Antwort sichtbar)
-            responseContainer.innerHTML = `
-                <div class="chat-box">
-                    <p><strong>Frage:</strong> ${userMessage}</p>
-                    <p><strong>Antwort:</strong> ${simulatedResponse}${quicklink}</p>
-                </div>
-            `;
+            const responseBox = document.createElement("div");
+            responseBox.className = "response";
+            responseBox.innerHTML = `<strong>AI:</strong> ${response}`;
+
+            responseContainer.appendChild(responseBox);
         }
     </script>
 
