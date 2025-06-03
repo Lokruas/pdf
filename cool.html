@@ -2,131 +2,168 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
-    <title>AI Sales Assistant</title>
+    <title>LaVita Sales Assistant</title>
     <style>
+        :root {
+            --lavita-blue: #0d2d57;
+            --accent: #00aa99;
+            --light-bg: #f9fafa;
+            --text-color: #333;
+        }
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f9fafa;
+            background-color: var(--light-bg);
             margin: 0;
-            padding: 2em;
-            color: #333;
+            padding: 0;
+            color: var(--text-color);
         }
 
-        /* Banner-Hintergrund */
-        .banner-container {
-            background-color: #FCFCF9;
-            padding: 2em;
-            border-radius: 12px;
-            margin-bottom: 2em;
+        header {
+            background-color: var(--lavita-blue);
+            padding: 1em;
+            display: flex;
+            justify-content: center;
         }
 
-        .banner img {
-            display: block;
-            max-width: 100%;
-            height: auto;
-            margin: 0 auto;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        header img {
+            height: 80px;
+        }
+
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5em 2em;
+            background-color: white;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .topbar button {
+            background-color: var(--lavita-blue);
+            color: white;
+            border: none;
+            padding: 0.5em 1em;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9em;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 2em auto;
+            padding: 1em;
         }
 
         form {
             display: flex;
-            justify-content: center;
-            gap: 0.5em;
-            margin-bottom: 1.5em;
-            flex-wrap: wrap;
+            gap: 1em;
+            margin-bottom: 1em;
         }
 
-        input[name="message"] {
-            width: 300px;
-            padding: 0.7em 1em;
-            border: 1px solid #ccc;
-            border-radius: 8px;
+        input[type="text"] {
+            flex: 1;
+            padding: 0.8em;
             font-size: 1em;
-            background-color: #fff;
-            transition: border-color 0.3s ease;
+            border: 1px solid #ccc;
+            border-radius: 6px;
         }
 
-        input[name="message"]:focus {
-            border-color: #00aa99;
-            outline: none;
-        }
-
-        button {
-            padding: 0.7em 1.5em;
-            background-color: #00aa99;
+        button.send {
+            background-color: var(--accent);
             color: white;
             border: none;
-            border-radius: 8px;
-            font-size: 1em;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-        button:hover {
-            background-color: #008f85;
-        }
-
-        .response {
-            max-width: 600px;
-            margin: 1em auto;
-            padding: 1em;
-            background-color: #e6f7f5;
-            border-left: 4px solid #00aa99;
+            padding: 0.8em 1.2em;
             border-radius: 6px;
-            font-size: 1.1em;
-            line-height: 1.5em;
+            cursor: pointer;
         }
 
-        @media (max-width: 600px) {
-            input[name="message"] {
-                width: 100%;
-            }
+        .output {
+            background-color: white;
+            border-radius: 6px;
+            padding: 1.5em;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
 
-            form {
-                flex-direction: column;
-                align-items: stretch;
-            }
+        .output a {
+            color: var(--lavita-blue);
+            text-decoration: underline;
+        }
+
+        .output .address {
+            cursor: pointer;
+            color: var(--accent);
+        }
+
+        .database-view-button {
+            display: block;
+            margin: 1em auto;
+            text-align: center;
+            background-color: white;
+            border: 2px solid var(--lavita-blue);
+            padding: 0.5em 1em;
+            border-radius: 6px;
+            font-weight: bold;
+            color: var(--lavita-blue);
+            cursor: pointer;
         }
     </style>
 </head>
 <body>
+    <header>
+        <img src="Banner.png" alt="LaVita Banner">
+    </header>
 
-    <!-- Bannerbereich mit Hintergrundfarbe -->
-    <div class="banner-container">
-        <div class="banner">
-            <img src="banner.png" alt="VITA Banner">
+    <div class="topbar">
+        <button onclick="startVoiceInput()">🎙 Spracheingabe</button>
+        <button onclick="uploadDocument()">➕ Dokument hochladen</button>
+    </div>
+
+    <div class="container">
+        <button class="database-view-button">🔍 Datenbankansicht</button>
+
+        <form onsubmit="handleSubmit(event)">
+            <input type="text" id="message" placeholder="Frage eingeben...">
+            <button type="submit" class="send">Senden</button>
+        </form>
+
+        <div class="output" id="responseContainer">
+            <!-- Beispielantwort -->
+            <p>du besuchst heute <a href="/kunden/lisa-koenig">Frau Dr. Lisa König</a>, Heilpraktikerin in <span class="address" onclick="showMapOptions('https://maps.google.com/?q=München+Schwabing')">München-Schwabing</span>.</p>
+
+            <p>In einem Umkreis von 5 km arbeiten bereits 3 andere Praxen erfolgreich mit LaVita – z. B. <a href="/kunden/naturpraxis-bergmann">Naturpraxis Bergmann</a> mit einem monatlichen Volumen von Ø 30 Flaschen.</p>
+
+            <p><strong>Empfehlung:</strong> Betone im Gespräch den regionalen Bezug und die gute Resonanz aus benachbarten Praxen. Stichworte wie „Ernährungsbegleitung“ oder „Vitalstoffberatung“ funktionieren in der Region besonders gut.</p>
+
+            <p><strong>Hinweis:</strong> Frau Dr. König bietet laut Website auch Kinderheilkunde an – hier lohnt es sich, unser Eltern-Kind-Broschürenpaket zu erwähnen.</p>
         </div>
     </div>
 
-    <!-- Chat-Formular -->
-    <form onsubmit="handleSubmit(event)">
-        <input type="text" name="message" id="message" placeholder="Gib deine Frage ein..." required>
-        <button type="submit">Senden</button>
-    </form>
-
-    <!-- Antwortanzeige -->
-    <div id="responseContainer"></div>
-
-    <!-- Einfaches Antwort-Skript -->
     <script>
-        function handleSubmit(event) {
-            event.preventDefault();
+        function handleSubmit(e) {
+            e.preventDefault();
             const input = document.getElementById("message");
             const responseContainer = document.getElementById("responseContainer");
-
-            const userMessage = input.value;
+            const text = input.value;
             input.value = "";
 
-            const response = `Simulierte Antwort auf: '${userMessage}'`;
+            // Demo-Ausgabe
+            const demo = `<p>Antwort auf: <strong>${text}</strong></p>`;
+            responseContainer.innerHTML = demo;
+        }
 
-            const responseBox = document.createElement("div");
-            responseBox.className = "response";
-            responseBox.innerHTML = `<strong>AI:</strong> ${response}`;
+        function startVoiceInput() {
+            alert("Spracherkennung gestartet (Demofunktion)");
+        }
 
-            responseContainer.appendChild(responseBox);
+        function uploadDocument() {
+            alert("Dokument hochladen (Demofunktion)");
+        }
+
+        function showMapOptions(link) {
+            alert("Bitte wählen Sie: Google Maps oder Karten-App\nDistanz: 3,2 km");
+            window.open(link, '_blank');
         }
     </script>
-
 </body>
 </html>
