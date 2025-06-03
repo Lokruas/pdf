@@ -13,6 +13,7 @@
             --text-color: #333;
             --border-radius: 6px;
             --box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            --header-bg: #FCFCF9;
         }
 
         body {
@@ -25,16 +26,18 @@
         }
 
         header {
-            background-color: var(--lavita-blue);
-            padding: 1rem;
+            background-color: var(--header-bg);
+            padding: 0;
             display: flex;
             justify-content: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
 
         header img {
-            height: 80px;
-            width: auto;
-            max-width: 100%;
+            width: 100%;
+            max-width: 1200px;
+            height: auto;
+            object-fit: contain;
         }
 
         .topbar {
@@ -47,6 +50,7 @@
             gap: 1rem;
         }
 
+        /* Rest deiner CSS-Regeln bleiben gleich */
         .topbar button {
             background-color: var(--lavita-blue);
             color: white;
@@ -80,7 +84,7 @@
             font-size: 1rem;
             border: 1px solid #ccc;
             border-radius: var(--border-radius);
-            min-width: 0; /* Fix für Flexbox overflow */
+            min-width: 0;
         }
 
         button.send {
@@ -136,13 +140,11 @@
             color: white;
         }
 
-        /* Accessibility improvements */
         button:focus, input:focus {
             outline: 2px solid var(--accent);
             outline-offset: 2px;
         }
 
-        /* Responsive adjustments */
         @media (max-width: 600px) {
             .topbar {
                 flex-direction: column;
@@ -161,7 +163,7 @@
 </head>
 <body>
     <header>
-        <img src="Banner.png" alt="LaVita Logo" aria-hidden="true">
+        <img src="Banner.png" alt="LaVita Banner" style="width:100%">
     </header>
 
     <div class="topbar">
