@@ -6,14 +6,17 @@ body {
 }
 
 header {
-  background-color: #0d2d57;
-  padding: 20px;
+  background-color: #061B2B; /* neue Farbe */
+  height: 130px;
   text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .banner-icon {
-  width: 110px;
-  height: 110px;
+  height: 130px;  /* volle Bannerhöhe */
+  width: auto;
   border-radius: 50%;
 }
 
@@ -24,6 +27,14 @@ header {
   padding: 30px;
   border-radius: 8px;
   box-shadow: 0 0 8px rgba(0,0,0,0.1);
+}
+
+#chat-container h1 {
+  font-size: 22px;
+  font-style: italic;
+  color: #333;
+  margin-bottom: 20px;
+  text-align: center;
 }
 
 #chat-output {
@@ -46,6 +57,7 @@ header {
 .buttons {
   display: flex;
   gap: 10px;
+  justify-content: center;
 }
 
 button {
@@ -61,16 +73,8 @@ button {
   color: white;
 }
 
-#voice-button {
-  background-color: #00aa99;
-  color: white;
-}
-
-#upload-button {
-  background-color: #00aa99;
-  color: white;
-}
-
+#voice-button,
+#upload-button,
 #database-button {
   background-color: #00aa99;
   color: white;
