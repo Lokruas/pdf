@@ -1,34 +1,39 @@
-<!DOCTYPE html>
-<html lang="de">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>V.I.T.A.L</title>
-  <link rel="stylesheet" href="style.css" />
-</head>
 <body>
-  <header>
-    <img src="banner.jpg" alt="Banner" class="banner-icon" />
-  </header>
+  <div id="app">
+    <!-- Sidebar -->
+    <aside id="sidebar">
+      <h2>Chats</h2>
+      <ul id="chat-list"></ul>
+      <button id="new-chat-button">➕ Neuer Chat</button>
+    </aside>
 
-  <main>
-    <section id="chat-container">
-      <h1>Hey, ich bin V.I.T.A.L. Wie kann ich dir helfen?</h1>
-      <div id="chat-output"></div>
+    <!-- Hauptinhalt -->
+    <main>
+      <header>
+        <img src="banner.jpg" alt="Banner" class="banner-icon" />
+      </header>
 
-      <div id="input-area">
-        <textarea id="user-input" placeholder="Frage eingeben..."></textarea>
-        <button id="send-button">Senden</button>
-      </div>
+      <section id="chat-container">
+        <h1>Hey, ich bin V.I.T.A.L. Wie kann ich dir helfen?</h1>
+        <div id="chat-output"></div>
 
-      <div class="icon-buttons">
-        <button id="voice-button">🎤 Spracherkennung</button>
-        <button id="upload-button">📄 Dokument hochladen</button>
-        <input type="file" id="file-upload" accept=".txt,.docx,.pdf" style="display:none">
-      </div>
-    </section>
-  </main>
+        <div id="input-area">
+          <textarea id="user-input" placeholder="Frage eingeben..."></textarea>
+          <button id="send-button">Senden</button>
+        </div>
+
+        <div class="icon-buttons">
+          <button id="voice-button">🎤 Spracherkennung</button>
+          <button id="upload-button">📄 Dokument hochladen</button>
+          <input type="file" id="file-upload" accept=".txt,.docx,.pdf" style="display:none">
+        </div>
+
+        <div class="export-button-row">
+          <button id="export-button">📤 Exportieren</button>
+        </div>
+      </section>
+    </main>
+  </div>
 
   <script src="script.js"></script>
 </body>
-</html>
