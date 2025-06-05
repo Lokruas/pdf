@@ -3,16 +3,28 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Chatbot</title>
+  <title>V.I.T.A.L</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="chat-container">
-    <h1>🤖 Chatbot</h1>
-    <div id="chat-output"></div>
-    <input type="text" id="user-input" placeholder="Frage eingeben..." />
-    <button onclick="sendMessage()">Senden</button>
-  </div>
+  <header>
+    <img src="banner.jpg" alt="Banner" class="banner-icon" />
+  </header>
+
+  <main>
+    <section id="chat-container">
+      <h1>🤖 V.I.T.A.L</h1>
+      <div id="chat-output"></div>
+      <textarea id="user-input" placeholder="Frage eingeben..."></textarea>
+      <div class="buttons">
+        <button id="send-button">Senden</button>
+        <button id="voice-button">🎤</button>
+        <button id="upload-button">📄</button>
+        <button id="database-button">🗄️</button>
+      </div>
+    </section>
+  </main>
+
   <script src="script.js"></script>
 </body>
 </html>
