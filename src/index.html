@@ -1,3 +1,11 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>V.I.T.A.L</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
 <body>
   <div id="app">
     <!-- Sidebar -->
@@ -7,27 +15,34 @@
       <button id="new-chat-button">➕ Neuer Chat</button>
     </aside>
 
-    <!-- Hauptinhalt -->
+    <!-- Hauptbereich -->
     <main>
+      <!-- Header -->
       <header>
         <img src="banner.jpg" alt="Banner" class="banner-icon" />
       </header>
 
+      <!-- Chatbereich -->
       <section id="chat-container">
         <h1>Hey, ich bin V.I.T.A.L. Wie kann ich dir helfen?</h1>
+
+        <!-- Nachrichtenverlauf -->
         <div id="chat-output"></div>
 
+        <!-- Eingabefeld + Senden -->
         <div id="input-area">
           <textarea id="user-input" placeholder="Frage eingeben..."></textarea>
           <button id="send-button">Senden</button>
         </div>
 
+        <!-- Sprach-/Uploadfunktionen -->
         <div class="icon-buttons">
           <button id="voice-button">🎤 Spracherkennung</button>
           <button id="upload-button">📄 Dokument hochladen</button>
-          <input type="file" id="file-upload" accept=".txt,.docx,.pdf" style="display:none">
+          <input type="file" id="file-upload" accept=".txt,.docx,.pdf" style="display: none" />
         </div>
 
+        <!-- Exportfunktion -->
         <div class="export-button-row">
           <button id="export-button">📤 Exportieren</button>
         </div>
@@ -37,3 +52,4 @@
 
   <script src="script.js"></script>
 </body>
+</html>
