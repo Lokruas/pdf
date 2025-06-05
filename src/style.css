@@ -1,9 +1,19 @@
+/* Grundlayout */
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #f9fafa;
+  margin: 0;
+  padding: 0;
+}
+
+/* App-Layout mit Sidebar */
 #app {
   display: flex;
 }
 
+/* Sidebar */
 aside#sidebar {
-  width: 200px;
+  width: 220px;
   background-color: #eaf2f4;
   padding: 20px;
   box-shadow: 2px 0 4px rgba(0,0,0,0.1);
@@ -17,30 +27,157 @@ aside#sidebar {
 #chat-list {
   list-style: none;
   padding: 0;
+  margin-bottom: 20px;
 }
 
 #chat-list li {
-  padding: 5px;
-  cursor: pointer;
+  padding: 8px 10px;
+  margin-bottom: 5px;
+  background-color: #fff;
   border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s;
 }
 
 #chat-list li:hover {
-  background-color: #cde6ea;
+  background-color: #d2edf0;
 }
 
 #new-chat-button {
-  margin-top: 10px;
-  padding: 8px;
   width: 100%;
+  padding: 10px;
   background-color: #00aa99;
   color: white;
+  border: none;
+  border-radius: 4px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* Hauptinhalt */
+main {
+  flex: 1;
+}
+
+/* Header-Bereich mit Banner */
+header {
+  background-color: #061B2B;
+  height: 130px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.banner-icon {
+  height: 130px;
+  width: auto;
+  border-radius: 50%;
+}
+
+/* Chatcontainer */
+#chat-container {
+  max-width: 900px;
+  margin: 40px auto;
+  background-color: white;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 0 8px rgba(0,0,0,0.1);
+}
+
+#chat-container h1 {
+  font-size: 22px;
+  font-style: italic;
+  color: #333;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+/* Nachrichtenbereich */
+#chat-output {
+  min-height: 200px;
+  max-height: 300px;
+  overflow-y: auto;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  padding: 10px;
+  background: #f9f9f9;
+}
+
+/* Eingabebereich */
+#input-area {
+  display: flex;
+  align-items: stretch;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+#user-input {
+  flex: 1;
+  height: 80px;
+  padding: 10px;
+  font-size: 16px;
+  resize: none;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+/* Senden-Button */
+#send-button {
+  background-color: #0d2d57;
+  color: white;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+#send-button:hover {
+  background-color: #12396c;
+}
+
+/* Funktionsbuttons */
+.icon-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.icon-buttons button {
+  background-color: #00aa99;
+  color: white;
+  padding: 10px 15px;
+  font-size: 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background-color 0.2s;
+}
+
+.icon-buttons button:hover {
+  background-color: #009688;
+}
+
+/* Exportbutton */
+.export-button-row {
+  margin-top: 20px;
+  text-align: right;
+}
+
+#export-button {
+  background-color: #333;
+  color: white;
+  padding: 8px 14px;
+  font-size: 14px;
   border: none;
   border-radius: 4px;
   cursor: pointer;
 }
 
-.export-button-row {
-  margin-top: 20px;
-  text-align: right;
+#export-button:hover {
+  background-color: #222;
 }
