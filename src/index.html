@@ -16,17 +16,17 @@
     </aside>
 
     <!-- Hauptbereich -->
-    <main>
-      <!-- Header -->
-      <header>
+    <div id="main-area">
+      <!-- Header mit Banner -->
+      <header id="chat-header">
         <img src="banner.jpg" alt="Banner" class="banner-icon" />
       </header>
 
-      <!-- Chatbereich -->
+      <!-- Chatcontainer -->
       <section id="chat-container">
         <h1>Hey, ich bin V.I.T.A.L. Wie kann ich dir helfen?</h1>
 
-        <!-- Nachrichtenverlauf -->
+        <!-- Verlauf -->
         <div id="chat-output"></div>
 
         <!-- Eingabefeld + Senden -->
@@ -35,19 +35,19 @@
           <button id="send-button">Senden</button>
         </div>
 
-        <!-- Sprach-/Uploadfunktionen -->
+        <!-- Funktionen -->
         <div class="icon-buttons">
           <button id="voice-button">🎤 Spracherkennung</button>
           <button id="upload-button">📄 Dokument hochladen</button>
           <input type="file" id="file-upload" accept=".txt,.docx,.pdf" style="display: none" />
         </div>
 
-        <!-- Exportfunktion -->
+        <!-- Export -->
         <div class="export-button-row">
           <button id="export-button">📤 Exportieren</button>
         </div>
       </section>
-    </main>
+    </div>
   </div>
 
   <script src="script.js"></script>
