@@ -1,43 +1,73 @@
-// Button-Funktionen registrieren
 document.getElementById('send-button').addEventListener('click', handleSubmit);
 document.getElementById('voice-button').addEventListener('click', startVoiceInput);
-document.getElementById('upload-button').addEventListener('click', uploadDocument);
+document.getElementById('upload-button').addEventListener('click', () => {
+  document.getElementById('file-upload').click();
+});
+document.getElementById('file-upload').addEventListener('change', handleFileUpload);
 document.getElementById('user-input').addEventListener('keydown', handleKeyPress);
 
-// Funktion zum Absenden der Nachricht
 function handleSubmit() {
   const input = document.getElementById("user-input");
   const output = document.getElementById("chat-output");
-
   const userMessage = input.value.trim();
   if (!userMessage) return;
 
-  // Nutzer-Nachricht anzeigen
   output.innerHTML += `<p><strong>Du:</strong> ${userMessage}</p>`;
   input.value = "";
 
-  // Platzhalter für Chatbot-Antwort
   setTimeout(() => {
     const botReply = "Das ist eine Beispielantwort vom Chatbot.";
     output.innerHTML += `<p><strong>V.I.T.A.L:</strong> ${botReply}</p>`;
-    output.scrollTop = output.scrollHeight; // Automatisch nach unten scrollen
+    output.scrollTop = output.scrollHeight;
   }, 500);
 }
 
-// Nachricht senden mit Enter (Shift+Enter = Zeilenumbruch)
 function handleKeyPress(event) {
   if (event.key === "Enter" && !event.shiftKey) {
-    event.preventDefault(); // Verhindert normalen Zeilenumbruch
+    event.preventDefault();
     handleSubmit();
   }
 }
 
-// Dummyfunktion für Spracheingabe
 function startVoiceInput() {
-  alert("Spracherkennung gestartet (Demofunktion)");
+  if (!('webkitSpeechRecognition' in window)) {
+    alert("Spracherkennung wird in diesem Browser nicht unterstützt.");
+    return;
+  }
+
+  const recognition = new webkitSpeechRecognition();
+  recognition.lang = "de-DE";
+  recognition.continuous = false;
+  recognition.interimResults = false;
+
+  recognition.start();
+
+  recognition.onresult = function (event) {
+    const result = event.results[0][0].transcript;
+    document.getElementById("user-input").value = result;
+    handleSubmit();
+  };
+
+  recognition.onerror = function (event) {
+    alert("Fehler bei der Spracherkennung: " + event.error);
+  };
 }
 
-// Dummyfunktion für Dokument-Upload
-function uploadDocument() {
-  alert("Dokument hochladen (Demofunktion)");
+function handleFileUpload(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+
+  reader.onload = function (e) {
+    const content = e.target.result;
+    document.getElementById("user-input").value = content;
+  };
+
+  if (file.type === "text/plain") {
+    reader.readAsText(file);
+  } else {
+    alert("Nur .txt-Dateien werden aktuell unterstützt.");
+    // Für .docx/.pdf braucht man zusätzliche Parser (z. B. mit external libs)
+  }
 }
