@@ -1,7 +1,6 @@
-let chats = {
-  0: []
-};
-let currentChatId = 0;
+let chats = {};
+let currentChatId = null;
+let chatCounter = 0;
 
 const chatOutput = document.getElementById("chat-output");
 const userInput = document.getElementById("user-input");
@@ -10,24 +9,63 @@ const voiceButton = document.getElementById("voice-button");
 const uploadButton = document.getElementById("upload-button");
 const fileUpload = document.getElementById("file-upload");
 const exportButton = document.getElementById("export-button");
+const exportOptions = document.getElementById("export-options");
 const chatList = document.getElementById("chat-list");
 const newChatButton = document.getElementById("new-chat-button");
 const toggleSidebarButton = document.getElementById("toggle-sidebar");
 const sidebar = document.getElementById("sidebar");
 
+// Sidebar toggeln
+toggleSidebarButton.addEventListener("click", () => {
+  sidebar.classList.toggle("collapsed");
+});
+
+// Chatverlauf anzeigen
+function updateChatOutput(chatId) {
+  chatOutput.innerHTML = "";
+  chats[chatId].messages.forEach(msg => {
+    const div = document.createElement("div");
+    div.textContent = `${msg.role === "user" ? "Du" : "V.I.T.A.L"}: ${msg.content}`;
+    chatOutput.appendChild(div);
+  });
+  chatOutput.scrollTop = chatOutput.scrollHeight;
+}
+
+// Neuen Chat anlegen
+function createChat(name = `Chat ${chatCounter + 1}`) {
+  const id = chatCounter++;
+  chats[id] = { name, messages: [] };
+  currentChatId = id;
+
+  const li = document.createElement("li");
+  li.textContent = name;
+  li.dataset.id = id;
+  li.addEventListener("click", () => {
+    currentChatId = parseInt(li.dataset.id);
+    updateChatOutput(currentChatId);
+  });
+  chatList.appendChild(li);
+}
+
 // Nachricht hinzufügen
 function addMessage(role, content) {
-  const msgDiv = document.createElement("div");
-  msgDiv.textContent = `${role === "user" ? "Du" : "V.I.T.A.L"}: ${content}`;
-  chatOutput.appendChild(msgDiv);
+  if (currentChatId === null) {
+    // Erster Chat wird mit Lead-Namen angelegt
+    createChat(content.substring(0, 20));
+  }
+  chats[currentChatId].messages.push({ role, content });
+
+  const div = document.createElement("div");
+  div.textContent = `${role === "user" ? "Du" : "V.I.T.A.L"}: ${content}`;
+  chatOutput.appendChild(div);
   chatOutput.scrollTop = chatOutput.scrollHeight;
-  chats[currentChatId].push({ role, content });
 }
 
 // Nachricht senden
 function sendMessage() {
   const text = userInput.value.trim();
   if (!text) return;
+
   addMessage("user", text);
   userInput.value = "";
 
@@ -46,7 +84,13 @@ userInput.addEventListener("keydown", e => {
 
 sendButton.addEventListener("click", sendMessage);
 
-// Spracherkennung (Speech to Text)
+// Neuer Chat
+newChatButton.addEventListener("click", () => {
+  createChat();
+  updateChatOutput(currentChatId);
+});
+
+// Spracherkennung
 voiceButton.addEventListener("click", () => {
   if (!("webkitSpeechRecognition" in window)) {
     alert("Spracherkennung wird nicht unterstützt.");
@@ -71,12 +115,13 @@ voiceButton.addEventListener("click", () => {
   recognition.start();
 });
 
-// Dokument hochladen
+// Datei-Upload
 uploadButton.addEventListener("click", () => fileUpload.click());
 
 fileUpload.addEventListener("change", () => {
   const file = fileUpload.files[0];
   if (!file) return;
+
   const reader = new FileReader();
   reader.onload = e => {
     userInput.value = e.target.result;
@@ -84,7 +129,13 @@ fileUpload.addEventListener("change", () => {
   reader.readAsText(file);
 });
 
-// Exportieren (json, txt, csv)
+// Exportoptionen anzeigen
+exportButton.addEventListener("click", () => {
+  exportOptions.style.display =
+    exportOptions.style.display === "none" ? "flex" : "none";
+});
+
+// Datei herunterladen
 function downloadFile(filename, content, type) {
   const blob = new Blob([content], { type });
   const link = document.createElement("a");
@@ -93,51 +144,26 @@ function downloadFile(filename, content, type) {
   link.click();
 }
 
+// Exportieren
 function exportChatAs(format) {
-  const messages = chats[currentChatId];
+  const chat = chats[currentChatId];
+  const messages = chat?.messages ?? [];
 
   if (format === "json") {
-    downloadFile("chat.json", JSON.stringify(messages, null, 2), "application/json");
+    downloadFile(`${chat.name}.json`, JSON.stringify(messages, null, 2), "application/json");
   } else if (format === "txt") {
     const txt = messages.map(m => `${m.role === "user" ? "Du" : "V.I.T.A.L"}: ${m.content}`).join("\n");
-    downloadFile("chat.txt", txt, "text/plain");
+    downloadFile(`${chat.name}.txt`, txt, "text/plain");
   } else if (format === "csv") {
     const csv = "Rolle,Nachricht\n" + messages.map(m => `${m.role},"${m.content}"`).join("\n");
-    downloadFile("chat.csv", csv, "text/csv");
+    downloadFile(`${chat.name}.csv`, csv, "text/csv");
   }
 }
 
-exportButton.addEventListener("click", () => {
-  const format = prompt("Exportformat wählen: json, txt, csv").toLowerCase();
-  if (["json", "txt", "csv"].includes(format)) {
-    exportChatAs(format);
-  } else {
-    alert("Ungültiges Format");
-  }
-});
-
-// Sidebar umschalten
-toggleSidebarButton.addEventListener("click", () => {
-  sidebar.classList.toggle("collapsed");
-});
-
-// Chat laden
-function switchChat(id) {
-  currentChatId = id;
-  chatOutput.innerHTML = "";
-  chats[id].forEach(m => addMessage(m.role, m.content));
-}
-
-// Neuen Chat hinzufügen
-newChatButton.addEventListener("click", () => {
-  currentChatId++;
-  chats[currentChatId] = [];
-
-  const li = document.createElement("li");
-  li.textContent = `Chat ${currentChatId + 1}`;
-  li.dataset.id = currentChatId;
-  li.addEventListener("click", () => switchChat(parseInt(li.dataset.id)));
-  chatList.appendChild(li);
-
-  chatOutput.innerHTML = "";
+// Exportbuttons
+document.querySelectorAll(".export-option").forEach(btn => {
+  btn.addEventListener("click", () => {
+    exportChatAs(btn.dataset.format);
+    exportOptions.style.display = "none";
+  });
 });
