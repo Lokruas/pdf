@@ -1,6 +1,7 @@
 let chats = {};
 let currentChatId = null;
 let chatCounter = 0;
+let waitingForFirstMessage = false;
 
 const chatOutput = document.getElementById("chat-output");
 const userInput = document.getElementById("user-input");
@@ -20,43 +21,57 @@ toggleSidebarButton.addEventListener("click", () => {
   sidebar.classList.toggle("collapsed");
 });
 
-// Chatverlauf anzeigen
+// Verlauf anzeigen
 function updateChatOutput(chatId) {
   chatOutput.innerHTML = "";
   chats[chatId].messages.forEach(msg => {
     const div = document.createElement("div");
-    div.textContent = `${msg.role === "user" ? "Du" : "V.I.T.A.L"}: ${msg.content}`;
+    div.className = msg.role === "user" ? "message-user" : "message-bot";
+    div.textContent = msg.content;
     chatOutput.appendChild(div);
   });
   chatOutput.scrollTop = chatOutput.scrollHeight;
 }
 
-// Neuen Chat anlegen
-function createChat(name = `Chat ${chatCounter + 1}`) {
+// Neuen Chat anlegen (mit Platzhaltername)
+function createChat(name = null) {
   const id = chatCounter++;
-  chats[id] = { name, messages: [] };
+  chats[id] = { name: name || `Chat ${id + 1}`, messages: [] };
   currentChatId = id;
+  waitingForFirstMessage = !name;
 
   const li = document.createElement("li");
-  li.textContent = name;
+  li.textContent = chats[id].name;
   li.dataset.id = id;
   li.addEventListener("click", () => {
     currentChatId = parseInt(li.dataset.id);
+    waitingForFirstMessage = false;
     updateChatOutput(currentChatId);
   });
   chatList.appendChild(li);
 }
 
+// Chatname nachträglich setzen
+function updateChatName(id, name) {
+  chats[id].name = name;
+  const item = [...chatList.children].find(li => parseInt(li.dataset.id) === id);
+  if (item) item.textContent = name;
+}
+
 // Nachricht hinzufügen
 function addMessage(role, content) {
   if (currentChatId === null) {
-    // Erster Chat wird mit Lead-Namen angelegt
     createChat(content.substring(0, 20));
+  } else if (waitingForFirstMessage && role === "user") {
+    updateChatName(currentChatId, content.substring(0, 20));
+    waitingForFirstMessage = false;
   }
+
   chats[currentChatId].messages.push({ role, content });
 
   const div = document.createElement("div");
-  div.textContent = `${role === "user" ? "Du" : "V.I.T.A.L"}: ${content}`;
+  div.className = role === "user" ? "message-user" : "message-bot";
+  div.textContent = content;
   chatOutput.appendChild(div);
   chatOutput.scrollTop = chatOutput.scrollHeight;
 }
@@ -152,18 +167,19 @@ function exportChatAs(format) {
   if (format === "json") {
     downloadFile(`${chat.name}.json`, JSON.stringify(messages, null, 2), "application/json");
   } else if (format === "txt") {
-    const txt = messages.map(m => `${m.role === "user" ? "Du" : "V.I.T.A.L"}: ${m.content}`).join("\n");
+    const txt = messages.map(m => `${m.role === "user" ? "DU: " : ""}${m.content}`).join("\n");
     downloadFile(`${chat.name}.txt`, txt, "text/plain");
   } else if (format === "csv") {
     const csv = "Rolle,Nachricht\n" + messages.map(m => `${m.role},"${m.content}"`).join("\n");
     downloadFile(`${chat.name}.csv`, csv, "text/csv");
   }
+
+  exportOptions.style.display = "none";
 }
 
-// Exportbuttons
+// Export Buttons aktivieren
 document.querySelectorAll(".export-option").forEach(btn => {
   btn.addEventListener("click", () => {
     exportChatAs(btn.dataset.format);
-    exportOptions.style.display = "none";
   });
 });
