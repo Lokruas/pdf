@@ -12,6 +12,7 @@ body {
 #app {
   display: flex;
   height: 100vh;
+  position: relative;
 }
 
 #toggle-sidebar {
@@ -31,7 +32,7 @@ body {
   width: 220px;
   background-color: #eaf2f4;
   padding: 20px;
-  box-shadow: 2px 0 4px rgba(0,0,0,0.1);
+  box-shadow: 2px 0 4px rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease;
 }
 
@@ -100,7 +101,7 @@ body {
   background-color: white;
   padding: 30px;
   border-radius: 8px;
-  box-shadow: 0 0 8px rgba(0,0,0,0.1);
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
 }
 
 #chat-container h1 {
@@ -164,12 +165,16 @@ body {
 .icon-buttons button {
   background-color: #00aa99;
   color: white;
-  padding: 10px 15px;
-  font-size: 15px;
+  padding: 10px;
+  font-size: 20px;
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  white-space: nowrap;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   transition: background-color 0.2s;
 }
 
@@ -177,20 +182,6 @@ body {
   background-color: #009688;
 }
 
-.export-button-row {
-  text-align: right;
-}
-
-#export-button {
-  background-color: #333;
-  color: white;
-  padding: 8px 14px;
-  font-size: 14px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-#export-button:hover {
-  background-color: #222;
+input[type=\"file\"] {
+  display: none;
 }
