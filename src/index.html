@@ -3,13 +3,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>V.I.T.A.L.</title>
+  <title>V.I.T.A.L</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <div id="app">
     <!-- Sidebar -->
     <aside id="sidebar" class="collapsed">
+      <div class="sidebar-padding"></div>
       <h2>Chats</h2>
       <ul id="chat-list"></ul>
       <button id="new-chat-button">➕ Neuer Chat</button>
@@ -27,7 +28,17 @@
 
       <!-- Chatcontainer -->
       <section id="chat-container">
-        <h1>Hey, ich bin V.I.T.A.L. Wie kann ich dir helfen?</h1>
+        <div class="chat-header-row">
+          <h1>Hey, ich bin V.I.T.A.L. Wie kann ich dir helfen?</h1>
+          <button id="export-button" title="Exportieren">📤</button>
+        </div>
+
+        <!-- Export-Formate -->
+        <div id="export-options" style="display: none;">
+          <button class="export-option" data-format="json">JSON</button>
+          <button class="export-option" data-format="txt">TXT</button>
+          <button class="export-option" data-format="csv">CSV</button>
+        </div>
 
         <!-- Verlauf -->
         <div id="chat-output"></div>
@@ -36,21 +47,6 @@
         <div id="input-area">
           <textarea id="user-input" placeholder="Frage eingeben..."></textarea>
           <button id="send-button">Senden</button>
-        </div>
-
-        <!-- Funktionen -->
-        <div class="icon-buttons">
-          <button id="voice-button" title="Spracherkennung">🎤</button>
-          <button id="export-button" title="Exportieren">📤</button>
-          <button id="upload-button" title="Dokument hochladen">📄</button>
-          <input type="file" id="file-upload" accept=".txt,.docx,.pdf" style="display: none" />
-        </div>
-
-        <!-- Export-Formate -->
-        <div id="export-options" style="display: none; text-align: center; gap: 10px; margin-top: 10px;">
-          <button class="export-option" data-format="json">JSON</button>
-          <button class="export-option" data-format="txt">TXT</button>
-          <button class="export-option" data-format="csv">CSV</button>
         </div>
       </section>
     </div>
