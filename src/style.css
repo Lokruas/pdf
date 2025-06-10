@@ -119,8 +119,7 @@ body {
 }
 
 #export-button {
-  #export-button {
-  background-color: #0d2d57; /* dunkelblauer Kreis */
+  background-color: #0d2d57;
   color: white;
   border: none;
   font-size: 18px;
@@ -132,7 +131,7 @@ body {
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  margin-left: 20px; /* Abstand zum Text */
+  margin-left: 20px;
 }
 
 #export-options {
