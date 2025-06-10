@@ -95,7 +95,7 @@ function addMessage(role, content) {
     // Automatische Bot-Antwort simulieren
     setTimeout(() => {
       const botResponseIndex = chats[currentChatId].messages.length;
-      chats[currentChatId].messages.push({ role: "bot", content: `Antwort auf: ${content}` });
+      chats[currentChatId].messages.push({ role: "bot", content: `${content}` });
       addMessageToOutput("bot", `Antwort auf: ${content}`, botResponseIndex, true);
     }, 400);
   }
