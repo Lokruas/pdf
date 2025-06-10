@@ -75,7 +75,7 @@ function sendMessage() {
   userInput.value = "";
 
   setTimeout(() => {
-    addMessage("bot", `${text}`);
+    addMessage("bot", `Hier steht die Ausgabe`);
   }, 400);
 }
 
