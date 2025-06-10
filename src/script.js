@@ -12,19 +12,46 @@ const chatList = document.getElementById("chat-list");
 const newChatButton = document.getElementById("new-chat-button");
 const toggleSidebarButton = document.getElementById("toggle-sidebar");
 const sidebar = document.getElementById("sidebar");
+const chatJumpsList = document.getElementById("chat-jumps-list");
+
 toggleSidebarButton.addEventListener("click", () => {
   sidebar.classList.toggle("collapsed");
 });
 
 function updateChatOutput(chatId) {
   chatOutput.innerHTML = "";
-  chats[chatId].messages.forEach(msg => {
+  chatJumpsList.innerHTML = "";
+  
+  if (!chats[chatId]) return;
+  
+  chats[chatId].messages.forEach((msg, index) => {
+    // Nachricht im Hauptbereich anzeigen
     const div = document.createElement("div");
     div.className = msg.role === "user" ? "message-user" : "message-bot";
     div.textContent = msg.content;
+    div.dataset.messageIndex = index;
     chatOutput.appendChild(div);
+    
+    // Eintrag in Chatsprünge-Sidebar hinzufügen (nur Nutzernachrichten)
+    if (msg.role === "user") {
+      const jumpItem = document.createElement("li");
+      jumpItem.textContent = msg.content.substring(0, 50) + (msg.content.length > 50 ? "..." : "");
+      jumpItem.dataset.messageIndex = index;
+      jumpItem.addEventListener("click", () => {
+        scrollToMessage(chatId, index);
+      });
+      chatJumpsList.appendChild(jumpItem);
+    }
   });
+  
   chatOutput.scrollTop = chatOutput.scrollHeight;
+}
+
+function scrollToMessage(chatId, messageIndex) {
+  const messages = document.querySelectorAll("#chat-output > div");
+  if (messages.length > messageIndex) {
+    messages[messageIndex].scrollIntoView({ behavior: "smooth" });
+  }
 }
 
 function createChat(name = null) {
@@ -42,6 +69,9 @@ function createChat(name = null) {
     updateChatOutput(currentChatId);
   });
   chatList.appendChild(li);
+  
+  // Leere die Chatsprünge-Sidebar für neuen Chat
+  chatJumpsList.innerHTML = "";
 }
 
 function updateChatName(id, name) {
@@ -60,10 +90,24 @@ function addMessage(role, content) {
 
   chats[currentChatId].messages.push({ role, content });
 
+  // Nachricht im Hauptbereich anzeigen
   const div = document.createElement("div");
   div.className = role === "user" ? "message-user" : "message-bot";
   div.textContent = content;
+  div.dataset.messageIndex = chats[currentChatId].messages.length - 1;
   chatOutput.appendChild(div);
+  
+  // Bei Nutzernachrichten auch in Chatsprünge-Sidebar hinzufügen
+  if (role === "user") {
+    const jumpItem = document.createElement("li");
+    jumpItem.textContent = content.substring(0, 50) + (content.length > 50 ? "..." : "");
+    jumpItem.dataset.messageIndex = chats[currentChatId].messages.length - 1;
+    jumpItem.addEventListener("click", () => {
+      scrollToMessage(currentChatId, chats[currentChatId].messages.length - 1);
+    });
+    chatJumpsList.appendChild(jumpItem);
+  }
+  
   chatOutput.scrollTop = chatOutput.scrollHeight;
 }
 
@@ -75,7 +119,7 @@ function sendMessage() {
   userInput.value = "";
 
   setTimeout(() => {
-    addMessage("bot", `Hier steht die Ausgabe`);
+    addMessage("bot", `${text}`);
   }, 400);
 }
 
@@ -126,3 +170,6 @@ document.querySelectorAll(".export-option").forEach(btn => {
     exportChatAs(btn.dataset.format);
   });
 });
+
+// Initialen Chat erstellen
+createChat("Hauptchat");
