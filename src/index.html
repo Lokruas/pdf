@@ -8,7 +8,7 @@
 </head>
 <body>
   <div id="app">
-    <!-- Sidebar -->
+    <!-- Linke Sidebar - Chats -->
     <aside id="sidebar" class="collapsed">
       <div class="sidebar-padding"></div>
       <h2>Chats</h2>
@@ -40,23 +40,21 @@
           <button class="export-option" data-format="csv">CSV</button>
         </div>
 
-        <div id="chat-wrapper">
-          <!-- Verlauf -->
-          <div id="chat-output"></div>
+        <!-- Verlauf -->
+        <div id="chat-output"></div>
 
-          <!-- Eingabefeld + Senden -->
-          <div id="input-area">
-            <textarea id="user-input" placeholder="Frage eingeben..."></textarea>
-            <button id="send-button">Senden</button>
-          </div>
+        <!-- Eingabefeld + Senden -->
+        <div id="input-area">
+          <textarea id="user-input" placeholder="Frage eingeben..."></textarea>
+          <button id="send-button">Senden</button>
         </div>
       </section>
     </div>
 
-    <!-- Rechte Navigation für Sprünge -->
-    <aside id="jump-list">
-      <h3>Sprünge</h3>
-      <ul id="jump-links"></ul>
+    <!-- Rechte Sidebar - Chatsprünge -->
+    <aside id="chat-jumps-sidebar">
+      <h2>Chatverlauf</h2>
+      <ul id="chat-jumps-list"></ul>
     </aside>
   </div>
 
