@@ -16,8 +16,9 @@
       <button id="new-chat-button">➕ Neuer Chat</button>
     </aside>
 
-    <!-- Toggle Sidebar Button -->
-    <button id="toggle-sidebar">☰</button>
+    <!-- Toggle Sidebar Buttons -->
+    <button id="toggle-sidebar" class="sidebar-toggle">☰</button>
+    <button id="toggle-jumps-sidebar" class="sidebar-toggle right">📋</button>
 
     <!-- Hauptbereich -->
     <div id="main-area">
@@ -52,8 +53,11 @@
     </div>
 
     <!-- Rechte Sidebar - Chatsprünge -->
-    <aside id="chat-jumps-sidebar">
-      <h2>Chatverlauf</h2>
+    <aside id="chat-jumps-sidebar" class="collapsed">
+      <div class="sidebar-header">
+        <h2>Chatverlauf</h2>
+        <button id="close-jumps-sidebar" class="close-sidebar">×</button>
+      </div>
       <ul id="chat-jumps-list"></ul>
     </aside>
   </div>
