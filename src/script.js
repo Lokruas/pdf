@@ -12,13 +12,10 @@ const chatList = document.getElementById("chat-list");
 const newChatButton = document.getElementById("new-chat-button");
 const toggleSidebarButton = document.getElementById("toggle-sidebar");
 const sidebar = document.getElementById("sidebar");
-
-// Sidebar toggeln
 toggleSidebarButton.addEventListener("click", () => {
   sidebar.classList.toggle("collapsed");
 });
 
-// Verlauf anzeigen
 function updateChatOutput(chatId) {
   chatOutput.innerHTML = "";
   chats[chatId].messages.forEach(msg => {
@@ -30,7 +27,6 @@ function updateChatOutput(chatId) {
   chatOutput.scrollTop = chatOutput.scrollHeight;
 }
 
-// Neuen Chat anlegen (mit Platzhaltername)
 function createChat(name = null) {
   const id = chatCounter++;
   chats[id] = { name: name || `Chat ${id + 1}`, messages: [] };
@@ -48,14 +44,12 @@ function createChat(name = null) {
   chatList.appendChild(li);
 }
 
-// Chatname nachträglich setzen
 function updateChatName(id, name) {
   chats[id].name = name;
   const item = [...chatList.children].find(li => parseInt(li.dataset.id) === id);
   if (item) item.textContent = name;
 }
 
-// Nachricht hinzufügen
 function addMessage(role, content) {
   if (currentChatId === null) {
     createChat(content.substring(0, 20));
@@ -73,7 +67,6 @@ function addMessage(role, content) {
   chatOutput.scrollTop = chatOutput.scrollHeight;
 }
 
-// Nachricht senden
 function sendMessage() {
   const text = userInput.value.trim();
   if (!text) return;
@@ -86,7 +79,6 @@ function sendMessage() {
   }, 400);
 }
 
-// Eingabe mit Enter
 userInput.addEventListener("keydown", e => {
   if (e.key === "Enter" && !e.shiftKey) {
     e.preventDefault();
@@ -95,20 +87,15 @@ userInput.addEventListener("keydown", e => {
 });
 
 sendButton.addEventListener("click", sendMessage);
-
-// Neuer Chat
 newChatButton.addEventListener("click", () => {
   createChat();
   updateChatOutput(currentChatId);
 });
-
-// Exportoptionen anzeigen/verstecken
 exportButton.addEventListener("click", () => {
   exportOptions.style.display =
     exportOptions.style.display === "none" ? "flex" : "none";
 });
 
-// Datei herunterladen
 function downloadFile(filename, content, type) {
   const blob = new Blob([content], { type });
   const link = document.createElement("a");
@@ -117,7 +104,6 @@ function downloadFile(filename, content, type) {
   link.click();
 }
 
-// Exportieren
 function exportChatAs(format) {
   const chat = chats[currentChatId];
   const messages = chat?.messages ?? [];
@@ -135,7 +121,6 @@ function exportChatAs(format) {
   exportOptions.style.display = "none";
 }
 
-// Export Buttons aktivieren
 document.querySelectorAll(".export-option").forEach(btn => {
   btn.addEventListener("click", () => {
     exportChatAs(btn.dataset.format);
