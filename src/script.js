@@ -6,9 +6,6 @@ let waitingForFirstMessage = false;
 const chatOutput = document.getElementById("chat-output");
 const userInput = document.getElementById("user-input");
 const sendButton = document.getElementById("send-button");
-const voiceButton = document.getElementById("voice-button");
-const uploadButton = document.getElementById("upload-button");
-const fileUpload = document.getElementById("file-upload");
 const exportButton = document.getElementById("export-button");
 const exportOptions = document.getElementById("export-options");
 const chatList = document.getElementById("chat-list");
@@ -105,46 +102,7 @@ newChatButton.addEventListener("click", () => {
   updateChatOutput(currentChatId);
 });
 
-// Spracherkennung
-voiceButton.addEventListener("click", () => {
-  if (!("webkitSpeechRecognition" in window)) {
-    alert("Spracherkennung wird nicht unterstützt.");
-    return;
-  }
-
-  const recognition = new webkitSpeechRecognition();
-  recognition.lang = "de-DE";
-  recognition.continuous = false;
-  recognition.interimResults = false;
-
-  recognition.onresult = e => {
-    const speechText = e.results[0][0].transcript;
-    userInput.value = speechText;
-    sendMessage();
-  };
-
-  recognition.onerror = e => {
-    alert("Fehler: " + e.error);
-  };
-
-  recognition.start();
-});
-
-// Datei-Upload
-uploadButton.addEventListener("click", () => fileUpload.click());
-
-fileUpload.addEventListener("change", () => {
-  const file = fileUpload.files[0];
-  if (!file) return;
-
-  const reader = new FileReader();
-  reader.onload = e => {
-    userInput.value = e.target.result;
-  };
-  reader.readAsText(file);
-});
-
-// Exportoptionen anzeigen
+// Exportoptionen anzeigen/verstecken
 exportButton.addEventListener("click", () => {
   exportOptions.style.display =
     exportOptions.style.display === "none" ? "flex" : "none";
