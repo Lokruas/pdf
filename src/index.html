@@ -8,35 +8,58 @@
 </head>
 <body>
   <div id="app">
+    <!-- Sidebar -->
     <aside id="sidebar" class="collapsed">
       <div class="sidebar-padding"></div>
       <h2>Chats</h2>
       <ul id="chat-list"></ul>
       <button id="new-chat-button">➕ Neuer Chat</button>
     </aside>
+
+    <!-- Toggle Sidebar Button -->
     <button id="toggle-sidebar">☰</button>
+
+    <!-- Hauptbereich -->
     <div id="main-area">
+      <!-- Header mit Banner -->
       <header id="chat-header">
         <img src="banner.jpg" alt="Banner" class="banner-icon" />
       </header>
+
+      <!-- Chatcontainer -->
       <section id="chat-container">
         <div class="chat-header-row">
           <h1>Hey, ich bin V.I.T.A.L. Wie kann ich dir helfen?</h1>
           <button id="export-button" title="Exportieren">📤</button>
         </div>
+
+        <!-- Export-Formate -->
         <div id="export-options" style="display: none;">
           <button class="export-option" data-format="json">JSON</button>
           <button class="export-option" data-format="txt">TXT</button>
           <button class="export-option" data-format="csv">CSV</button>
         </div>
-        <div id="chat-output"></div>
-        <div id="input-area">
-          <textarea id="user-input" placeholder="Frage eingeben..."></textarea>
-          <button id="send-button">Senden</button>
+
+        <div id="chat-wrapper">
+          <!-- Verlauf -->
+          <div id="chat-output"></div>
+
+          <!-- Eingabefeld + Senden -->
+          <div id="input-area">
+            <textarea id="user-input" placeholder="Frage eingeben..."></textarea>
+            <button id="send-button">Senden</button>
+          </div>
         </div>
       </section>
     </div>
+
+    <!-- Rechte Navigation für Sprünge -->
+    <aside id="jump-list">
+      <h3>Sprünge</h3>
+      <ul id="jump-links"></ul>
+    </aside>
   </div>
+
   <script src="script.js"></script>
 </body>
 </html>
