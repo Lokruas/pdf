@@ -299,3 +299,17 @@ function downloadFile(filename, content, type) {
 
 // Initialisierung
 createChat("Hauptchat");
+// Datenkammer-Eventlistener
+document.getElementById("data-chamber-button").addEventListener("click", () => {
+  document.getElementById("data-chamber").style.display = "flex";
+});
+
+document.getElementById("data-chamber-close").addEventListener("click", () => {
+  document.getElementById("data-chamber").style.display = "none";
+});
+
+// Info-Button Toggle
+document.getElementById("data-chamber-info-button").addEventListener("click", () => {
+  const infoDiv = document.getElementById("data-chamber-info");
+  infoDiv.style.display = infoDiv.style.display === "none" ? "block" : "none";
+});
