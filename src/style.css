@@ -1,4 +1,4 @@
-* {
+* {More actions
   box-sizing: border-box;
   margin: 0;
   padding: 0;
@@ -33,6 +33,7 @@ body {
   left: auto;
 }
 
+/* Linke Sidebar - Chats */
 /* Linke Sidebar - Chatauswahl */
 #sidebar {
   width: 220px;
@@ -172,12 +173,14 @@ body {
   background: #f9f9f9;
   display: flex;
   flex-direction: column;
+  gap: 10px;
   gap: 15px;
 }
 
 .message-user {
   background-color: #00aa99;
   color: white;
+  padding: 10px 14px;
   padding: 12px 16px;
   border-radius: 16px 0px 16px 16px;
   max-width: 70%;
@@ -188,6 +191,7 @@ body {
 }
 
 .message-bot {
+  align-self: flex-start;
   display: flex;
   align-items: flex-start;
   gap: 10px;
@@ -224,7 +228,6 @@ body {
   align-items: stretch;
   gap: 10px;
   margin-bottom: 10px;
-  position: relative;
 }
 
 #user-input {
@@ -254,6 +257,7 @@ body {
 }
 
 /* Rechte Sidebar - Chatsprünge */
+/* Rechte Sidebar - Chatsprünge (nur Organisation) */
 #chat-jumps-sidebar {
   width: 250px;
   background-color: #f5f5f5;
@@ -340,6 +344,7 @@ body {
 }
 
 /* Bearbeitungsdialog */
+/* Bearbeitungsdialog für Sprungtitel */
 .edit-dialog {
   position: fixed;
   top: 50%;
@@ -384,183 +389,4 @@ body {
 
 .edit-dialog-buttons button:last-child {
   background-color: #ccc;
-}
-
-/* Datenkammer Styles */
-#data-chamber-button {
-  position: absolute;
-  top: -45px;
-  right: 10px;
-  background-color: #00aa99;
-  color: white;
-  border: none;
-  border-radius: 50%;
-  width: 36px;
-  height: 36px;
-  font-size: 20px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 100;
-}
-
-#data-chamber-button:hover {
-  background-color: #008c7a;
-}
-
-#data-chamber {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.7);
-  z-index: 2000;
-  display: none;
-  justify-content: center;
-  align-items: center;
-}
-
-#data-chamber.active {
-  display: flex;
-}
-
-#data-chamber-content {
-  background-color: white;
-  width: 90%;
-  max-width: 900px;
-  max-height: 90vh;
-  border-radius: 8px;
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-}
-
-#data-chamber-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
-  padding-bottom: 10px;
-  border-bottom: 1px solid #eee;
-}
-
-#data-chamber-title {
-  font-size: 24px;
-  color: #0d2d57;
-}
-
-#data-chamber-close {
-  background: none;
-  border: none;
-  font-size: 24px;
-  cursor: pointer;
-  color: #666;
-}
-
-#data-chamber-body {
-  flex: 1;
-  overflow-y: auto;
-  margin-bottom: 20px;
-  padding: 10px;
-}
-
-.data-pair-container {
-  display: flex;
-  gap: 15px;
-  margin-bottom: 15px;
-  align-items: center;
-}
-
-.data-key-input {
-  flex: 1;
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
-
-.data-value-input {
-  flex: 2;
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  min-height: 40px;
-}
-
-#data-chamber-controls {
-  display: flex;
-  justify-content: space-between;
-  padding-top: 15px;
-  border-top: 1px solid #eee;
-}
-
-#data-chamber-info {
-  background-color: #f0f7f8;
-  padding: 15px;
-  border-radius: 4px;
-  margin-bottom: 20px;
-  border-left: 4px solid #00aa99;
-}
-
-#data-chamber-info h3 {
-  margin-bottom: 10px;
-  color: #0d2d57;
-}
-
-#data-chamber-info p {
-  margin-bottom: 8px;
-  line-height: 1.5;
-}
-
-.data-chamber-action-button {
-  padding: 8px 16px;
-  border-radius: 4px;
-  border: none;
-  cursor: pointer;
-  font-weight: bold;
-}
-
-#data-chamber-cancel {
-  background-color: #f0f0f0;
-  color: #333;
-}
-
-#data-chamber-save {
-  background-color: #00aa99;
-  color: white;
-}
-
-#data-chamber-info-button {
-  background-color: #0d2d57;
-  color: white;
-}
-
-.scroll-indicator {
-  text-align: center;
-  color: #666;
-  font-size: 14px;
-  margin: 10px 0;
-}
-
-/* Responsive Anpassungen */
-@media (max-width: 768px) {
-  #sidebar, #chat-jumps-sidebar {
-    position: absolute;
-    z-index: 100;
-    height: 100%;
-  }
-  
-  #sidebar {
-    left: 0;
-  }
-  
-  #chat-jumps-sidebar {
-    right: 0;
-  }
-  
-  #data-chamber-content {
-    width: 95%;
-    height: 95%;
-  }
 }
