@@ -48,6 +48,7 @@
         <div id="input-area">
           <textarea id="user-input" placeholder="Frage eingeben..."></textarea>
           <button id="send-button">Senden</button>
+          <button id="data-chamber-button" title="Datenkammer öffnen">+</button>
         </div>
       </section>
     </div>
@@ -78,5 +79,30 @@
   </div>
 
   <script src="script.js"></script>
+  <div id="data-chamber">
+  <div id="data-chamber-content">
+    <div id="data-chamber-header">
+      <h2>Datenkammer</h2>
+      <button id="data-chamber-close">×</button>
+    </div>
+    
+    <div id="data-chamber-info" style="display: none;">
+      <h3>Informationen</h3>
+      <p>Daten werden als JSON gespeichert und mit dem aktuellen Lead verknüpft.</p>
+    </div>
+    
+    <div id="data-chamber-body">
+      <!-- Dynamische Felder kommen hierhin -->
+    </div>
+
+    <div id="data-chamber-controls">
+      <button id="data-chamber-cancel">Abbrechen</button>
+      <div>
+        <button id="data-chamber-info-button">ℹ Info</button>
+        <button id="data-chamber-save">Speichern</button>
+      </div>
+    </div>
+  </div>
+</div>
 </body>
 </html>
