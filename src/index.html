@@ -7,55 +7,95 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <header>
-    <img src="banner.jpg" alt="Banner" class="banner" />
-  </header>
-
-  <div class="container">
-    <aside class="sidebar">
+  <div id="app">
+    <!-- Sidebar Toggle Button -->
+    <button class="sidebar-toggle" id="toggle-sidebar">☰</button>
+    
+    <!-- Linke Sidebar - Chatauswahl -->
+    <aside id="sidebar">
       <h2>Chats</h2>
       <ul id="chat-list"></ul>
+      <button id="new-chat-button">Neuer Chat</button>
     </aside>
 
-    <main class="chat-section">
-      <div id="chat-output"></div>
+    <!-- Hauptbereich -->
+    <div id="main-area">
+      <header id="chat-header">
+        <img src="Profil.png" alt="Banner" class="banner-icon" />
+      </header>
 
-      <!-- Eingabefeld + Senden + Datenkammer -->
-      <div id="input-area">
-        <textarea id="user-input" placeholder="Frage eingeben..."></textarea>
-        <button id="send-button">Senden</button>
-        <button id="open-questionnaire" title="Datenkammer öffnen">➕</button>
-      </div>
-    </main>
-  </div>
+      <div id="chat-container">
+        <div class="chat-header-row">
+          <h1>LaVita Sales Assistant</h1>
+          <button id="export-button">↓</button>
+          <div id="export-options" style="display: none;">
+            <button class="export-option" data-format="json">JSON</button>
+            <button class="export-option" data-format="txt">TXT</button>
+            <button class="export-option" data-format="csv">CSV</button>
+          </div>
+        </div>
 
-  <!-- MODAL: Datenkammer -->
-  <div id="questionnaire-modal" class="modal" style="display: none;">
-    <div class="modal-content">
-      <h2>Datenkammer</h2>
-      <div class="scroll-area" id="questionnaire-fields">
-        <!-- Wird per JS dynamisch mit 10 Paaren gefüllt -->
-      </div>
+        <div id="chat-output"></div>
 
-      <!-- Fixierte Aktionen -->
-      <div class="questionnaire-actions">
-        <button id="save-questionnaire">💾 Speichern</button>
-        <button id="cancel-questionnaire">✖ Abbrechen</button>
-        <button id="info-questionnaire">ℹ Info</button>
+        <!-- Eingabefeld + Senden + Datenkammer -->
+        <div id="input-area">
+          <button id="data-chamber-button" title="Datenkammer öffnen">+</button>
+          <textarea id="user-input" placeholder="Ihre Nachricht..."></textarea>
+          <button id="send-button">Senden</button>
+        </div>
       </div>
     </div>
-  </div>
 
-  <!-- MODAL: Info -->
-  <div id="info-modal" class="modal" style="display: none;">
-    <div class="modal-content small">
-      <h3>Was passiert hier?</h3>
-      <p>
-        In der <strong>Datenkammer</strong> kannst du strukturierte Informationen zu einem Lead eingeben. 
-        Diese Daten werden als JSON gespeichert und dem Lead zugeordnet oder bestehende Daten ergänzt.
-        Nutze die Dropdown zur Auswahl des Feldtyps und gib deinen Wert manuell ein.
-      </p>
-      <button id="close-info-modal">OK</button>
+    <!-- Rechte Sidebar - Chatsprünge -->
+    <aside id="chat-jumps-sidebar">
+      <div class="sidebar-header">
+        <h2>Chatverlauf</h2>
+        <button class="close-sidebar" id="close-jumps-sidebar">×</button>
+      </div>
+      <ul id="chat-jumps-list"></ul>
+    </aside>
+    
+    <!-- Sidebar Toggle Button rechts -->
+    <button class="sidebar-toggle right" id="toggle-jumps-sidebar">☰</button>
+
+    <!-- Bearbeitungsdialog für Sprungtitel -->
+    <div class="edit-dialog" id="edit-jump-title-dialog" style="display: none;">
+      <h3>Titel bearbeiten</h3>
+      <input type="text" id="edit-jump-title-input" placeholder="Neuer Titel">
+      <div class="edit-dialog-buttons">
+        <button id="save-jump-title">Speichern</button>
+        <button id="cancel-jump-title">Abbrechen</button>
+      </div>
+    </div>
+
+    <!-- MODAL: Datenkammer -->
+    <div id="data-chamber">
+      <div id="data-chamber-content">
+        <div id="data-chamber-header">
+          <h2 id="data-chamber-title">Datenkammer</h2>
+          <button id="data-chamber-close">×</button>
+        </div>
+        
+        <div id="data-chamber-info">
+          <h3>Informationen zur Datenkammer</h3>
+          <p>Hier können Sie strukturierte Daten zu Leads erfassen. Jedes Datenpaar besteht aus einem Schlüssel (z.B. "email") und einem Wert.</p>
+          <p>Die Daten werden mit dem aktuellen Chat verknüpft und können später exportiert oder in der Datenbank gespeichert werden.</p>
+          <p>Bestehende Lead-Daten werden durch neue Einträge ergänzt, doppelte Schlüssel werden überschrieben.</p>
+        </div>
+        
+        <div id="data-chamber-body">
+          <!-- Wird per JS dynamisch mit Datenpaaren gefüllt -->
+        </div>
+
+        <!-- Fixierte Aktionen -->
+        <div id="data-chamber-controls">
+          <button id="data-chamber-cancel">Abbrechen</button>
+          <div>
+            <button id="data-chamber-info-button">Info</button>
+            <button id="data-chamber-save">Speichern</button>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
