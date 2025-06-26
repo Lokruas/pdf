@@ -2,73 +2,60 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>V.I.T.A.L</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>LaVita Sales Assistant</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="app">
-    <!-- Linke Sidebar - Chats -->
-    <aside id="sidebar" class="collapsed">
-      <div class="sidebar-padding"></div>
+  <header>
+    <img src="banner.jpg" alt="Banner" class="banner" />
+  </header>
+
+  <div class="container">
+    <aside class="sidebar">
       <h2>Chats</h2>
       <ul id="chat-list"></ul>
-      <button id="new-chat-button">➕ Neuer Chat</button>
     </aside>
 
-    <!-- Toggle Sidebar Buttons -->
-    <button id="toggle-sidebar" class="sidebar-toggle">☰</button>
-    <button id="toggle-jumps-sidebar" class="sidebar-toggle right">📋</button>
+    <main class="chat-section">
+      <div id="chat-output"></div>
 
-    <!-- Hauptbereich -->
-    <div id="main-area">
-      <!-- Header mit Banner -->
-      <header id="chat-header">
-        <img src="banner.jpg" alt="Banner" class="banner-icon" />
-      </header>
+      <!-- Eingabefeld + Senden + Datenkammer -->
+      <div id="input-area">
+        <textarea id="user-input" placeholder="Frage eingeben..."></textarea>
+        <button id="send-button">Senden</button>
+        <button id="open-questionnaire" title="Datenkammer öffnen">➕</button>
+      </div>
+    </main>
+  </div>
 
-      <!-- Chatcontainer -->
-      <section id="chat-container">
-        <div class="chat-header-row">
-          <h1>Hey, ich bin V.I.T.A.L. Wie kann ich dir helfen?</h1>
-          <button id="export-button" title="Exportieren">📤</button>
-        </div>
+  <!-- MODAL: Datenkammer -->
+  <div id="questionnaire-modal" class="modal" style="display: none;">
+    <div class="modal-content">
+      <h2>Datenkammer</h2>
+      <div class="scroll-area" id="questionnaire-fields">
+        <!-- Wird per JS dynamisch mit 10 Paaren gefüllt -->
+      </div>
 
-        <!-- Export-Formate -->
-        <div id="export-options" style="display: none;">
-          <button class="export-option" data-format="json">JSON</button>
-          <button class="export-option" data-format="txt">TXT</button>
-          <button class="export-option" data-format="csv">CSV</button>
-        </div>
-
-        <!-- Verlauf -->
-        <div id="chat-output"></div>
-
-        <!-- Eingabefeld + Senden -->
-        <div id="input-area">
-          <textarea id="user-input" placeholder="Frage eingeben..."></textarea>
-          <button id="send-button">Senden</button>
-        </div>
-      </section>
+      <!-- Fixierte Aktionen -->
+      <div class="questionnaire-actions">
+        <button id="save-questionnaire">💾 Speichern</button>
+        <button id="cancel-questionnaire">✖ Abbrechen</button>
+        <button id="info-questionnaire">ℹ Info</button>
+      </div>
     </div>
+  </div>
 
-    <!-- Rechte Sidebar - Chatsprünge (nur für Organisation) -->
-    <aside id="chat-jumps-sidebar" class="collapsed">
-      <div class="sidebar-header">
-        <h2>Chatverlauf</h2>
-        <button id="close-jumps-sidebar" class="close-sidebar">×</button>
-      </div>
-      <ul id="chat-jumps-list"></ul>
-    </aside>
-
-    <!-- Dialog für Titelbearbeitung (nur für Sidebar) -->
-    <div id="edit-jump-title-dialog" class="edit-dialog" style="display: none;">
-      <h3>Titel bearbeiten</h3>
-      <input type="text" id="edit-jump-title-input">
-      <div class="edit-dialog-buttons">
-        <button id="save-jump-title">Speichern</button>
-        <button id="cancel-jump-title">Abbrechen</button>
-      </div>
+  <!-- MODAL: Info -->
+  <div id="info-modal" class="modal" style="display: none;">
+    <div class="modal-content small">
+      <h3>Was passiert hier?</h3>
+      <p>
+        In der <strong>Datenkammer</strong> kannst du strukturierte Informationen zu einem Lead eingeben. 
+        Diese Daten werden als JSON gespeichert und dem Lead zugeordnet oder bestehende Daten ergänzt.
+        Nutze die Dropdown zur Auswahl des Feldtyps und gib deinen Wert manuell ein.
+      </p>
+      <button id="close-info-modal">OK</button>
     </div>
   </div>
 
