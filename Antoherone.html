@@ -8,24 +8,36 @@
 </head>
 <body>
     <div id="app">
-        <!-- Linke Sidebar -->
+        <!-- Linke Sidebar (Chat-Auswahl) -->
         <div id="sidebar">
             <div class="sidebar-padding">
                 <h2>Chats</h2>
-                <button id="new-chat-button">Neuer Chat</button>
+                <button id="new-chat-button">
+                    <span>Neuer Chat</span>
+                </button>
                 
                 <ul id="chat-list">
+                    <!-- Chat-Einträge werden hier dynamisch eingefügt -->
                     <li class="active">
                         <span class="chat-name">Aktueller Chat</span>
                         <span class="chat-date">Heute</span>
+                    </li>
+                    <li>
+                        <span class="chat-name">Vertragsberatung</span>
+                        <span class="chat-date">Gestern</span>
                     </li>
                 </ul>
                 
                 <div id="chat-history-container">
                     <h2>Verlauf</h2>
                     <div id="chat-jumps-list">
+                        <!-- Verlaufseinträge werden hier dynamisch eingefügt -->
                         <div class="jump-item">
-                            <span class="jump-item-content">Vorheriger Chat</span>
+                            <span class="jump-item-content">Vertragsfragen vom 15.05.</span>
+                            <div class="jump-item-actions">
+                                <button class="edit-chat" title="Bearbeiten">✎</button>
+                                <button class="delete-chat" title="Löschen">🗑</button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -34,18 +46,40 @@
         
         <!-- Hauptbereich -->
         <div id="main-area">
+            <!-- Header mit Logo -->
             <header id="chat-header">
                 <img src="Profil.png" alt="V.I.T.A.L Logo" class="banner-icon">
                 <h1>V.I.T.A.L</h1>
             </header>
             
+            <!-- Chat-Container -->
             <div id="chat-container">
                 <div class="chat-header-row">
                     <h2>Aktueller Chat: <span id="current-chat-title">Neuer Chat</span></h2>
+                    <div class="header-buttons">
+                        <button id="export-chat-button">
+                            <span>Exportieren</span>
+                        </button>
+                        <button id="questionnaire-button">
+                            <span>Fragebogen</span>
+                        </button>
+                        <button id="edit-chat-button">
+                            <span>Bearbeiten</span>
+                        </button>
+                    </div>
                 </div>
                 
+                <div id="export-options">
+                    <!-- Export-Optionen werden hier angezeigt -->
+                    <button class="export-option" data-format="pdf">PDF</button>
+                    <button class="export-option" data-format="txt">Text</button>
+                    <button class="export-option" data-format="json">JSON</button>
+                </div>
+                
+                <!-- Chat-Ausgabebereich -->
                 <div id="chat-output">
-                    <!-- Bot-Nachricht -->
+                    <!-- Nachrichten werden hier dynamisch eingefügt -->
+                    <!-- Beispiel für eine Bot-Nachricht -->
                     <div class="message message-bot">
                         <div class="message-header">
                             <div class="bot-avatar">
@@ -53,11 +87,11 @@
                             </div>
                         </div>
                         <div class="message-content">
-                            Hallo! Wie kann ich Ihnen helfen?
+                            Hallo! Wie kann ich Ihnen heute helfen?
                         </div>
                     </div>
                     
-                    <!-- User-Nachricht -->
+                    <!-- Beispiel für eine User-Nachricht -->
                     <div class="message message-user">
                         <div class="message-content">
                             Ich habe eine Frage zu meinem Vertrag.
@@ -65,9 +99,12 @@
                     </div>
                 </div>
                 
+                <!-- Eingabebereich -->
                 <div id="input-area">
                     <textarea id="user-input" placeholder="Schreiben Sie Ihre Nachricht..."></textarea>
-                    <button id="send-button">Senden</button>
+                    <button id="send-button">
+                        <span>Senden</span>
+                    </button>
                 </div>
             </div>
         </div>
@@ -81,6 +118,7 @@
             
             <div class="sidebar-content">
                 <div id="data-fields-container">
+                    <!-- Datenfelder werden hier dynamisch eingefügt -->
                     <div class="data-pair-container">
                         <input type="text" class="data-key-input" placeholder="Feldname">
                         <input type="text" class="data-value-input" placeholder="Wert">
@@ -94,10 +132,12 @@
                 </div>
                 
                 <div class="sidebar-controls">
-                    <button class="add-field-btn">+ Feld hinzufügen</button>
+                    <button class="add-field-btn primary-button">
+                        <span>+ Feld hinzufügen</span>
+                    </button>
                     <div class="action-buttons">
-                        <button class="secondary-button">Abbrechen</button>
-                        <button class="primary-button">Speichern</button>
+                        <button class="secondary-button" id="cancel-questionnaire">Abbrechen</button>
+                        <button class="primary-button" id="save-questionnaire">Speichern</button>
                     </div>
                 </div>
             </div>
@@ -106,6 +146,24 @@
         <!-- Sidebar Toggle Buttons -->
         <button class="sidebar-toggle left-toggle">&equiv;</button>
         <button class="sidebar-toggle right-toggle">&equiv;</button>
+        
+        <!-- Edit Dialog -->
+        <div class="edit-dialog">
+            <div class="dialog-content">
+                <h3>Chat umbenennen</h3>
+                <input type="text" class="edit-title-input" placeholder="Neuer Chat-Name">
+                <div class="edit-dialog-buttons">
+                    <button class="secondary-button" id="cancel-edit">Abbrechen</button>
+                    <button class="primary-button" id="save-edit">Speichern</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Toast Notification -->
+        <div class="toast-container"></div>
     </div>
+
+    <!-- WICHTIG: JavaScript-Anbindung bleibt erhalten -->
+    <script src="script.js"></script>
 </body>
 </html>
