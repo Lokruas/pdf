@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', function() {
     let currentChatId = null;
     let chatCounter = 0;
     let waitingForFirstMessage = false;
+    let jumpTitles = {}; // Speichert angepasste Titel für Chatsprünge
 
     // DOM-Elemente mit Fehlerbehandlung
     function getElement(id) {
@@ -52,8 +53,7 @@ document.addEventListener('DOMContentLoaded', function() {
         chats[id] = { 
             name: name || `Chat ${id + 1}`, 
             messages: [],
-            jumpTitles: {},
-            dataPairs: [] // Für Datenkammer
+            jumpTitles: {} // Speichert angepasste Titel für diesen Chat
         };
         currentChatId = id;
         waitingForFirstMessage = !name;
@@ -71,6 +71,10 @@ document.addEventListener('DOMContentLoaded', function() {
             elements.chatList.appendChild(li);
         }
         
+        if (elements.chatJumpsList) {
+            elements.chatJumpsList.innerHTML = "";
+        }
+        
         updateChatDisplay(currentChatId);
     }
 
@@ -84,12 +88,16 @@ document.addEventListener('DOMContentLoaded', function() {
 
         chats[chatId].messages.forEach((msg, index) => {
             addMessageToOutput(msg.role, msg.content, index);
+
+            // Nur Nutzernachrichten in die Sidebar aufnehmen
             if (msg.role === "user") {
                 addJumpItem(chatId, index, msg.content);
             }
         });
 
-        elements.chatOutput.scrollTop = elements.chatOutput.scrollHeight;
+        if (elements.chatOutput) {
+            elements.chatOutput.scrollTop = elements.chatOutput.scrollHeight;
+        }
     }
 
     function addMessageToOutput(role, content, index) {
@@ -102,6 +110,7 @@ document.addEventListener('DOMContentLoaded', function() {
             div.dataset.messageIndex = index;
             elements.chatOutput.appendChild(div);
         } else {
+            // Bot-Nachricht mit Avatar
             const botMessage = document.createElement("div");
             botMessage.className = "message-bot";
 
@@ -130,29 +139,37 @@ document.addEventListener('DOMContentLoaded', function() {
 
         const contentSpan = document.createElement("span");
         contentSpan.className = "jump-item-content";
-        contentSpan.textContent = originalContent.substring(0, 50) + (originalContent.length > 50 ? "..." : "");
+
+        // Verwendet angepassten Titel falls vorhanden, sonst Original
+        const displayText = chats[chatId].jumpTitles[messageIndex] || 
+                          originalContent.substring(0, 50) + 
+                          (originalContent.length > 50 ? "..." : "");
+        contentSpan.textContent = displayText;
 
         const actionsDiv = document.createElement("div");
         actionsDiv.className = "jump-item-actions";
 
+        // Bearbeiten-Button
         const editButton = document.createElement("button");
         editButton.innerHTML = "✏️";
         editButton.title = "Titel bearbeiten";
         editButton.addEventListener("click", (e) => {
             e.stopPropagation();
-            showEditTitleDialog(chatId, messageIndex, contentSpan.textContent);
+            showEditTitleDialog(chatId, messageIndex, displayText);
         });
 
+        // Löschen-Button
         const deleteButton = document.createElement("button");
         deleteButton.innerHTML = "🗑️";
-        deleteButton.title = "Eintrag löschen";
+        deleteButton.title = "Aus Verlauf löschen";
         deleteButton.addEventListener("click", (e) => {
             e.stopPropagation();
-            deleteJumpItem(chatId, messageIndex);
+            removeJumpItem(chatId, messageIndex);
         });
 
         actionsDiv.appendChild(editButton);
         actionsDiv.appendChild(deleteButton);
+
         jumpItem.appendChild(contentSpan);
         jumpItem.appendChild(actionsDiv);
 
@@ -163,14 +180,47 @@ document.addEventListener('DOMContentLoaded', function() {
         elements.chatJumpsList.appendChild(jumpItem);
     }
 
-    function deleteJumpItem(chatId, messageIndex) {
-        if (!confirm("Möchten Sie diesen Eintrag wirklich aus der Sidebar löschen?")) return;
+    function showEditTitleDialog(chatId, messageIndex, currentTitle) {
+        if (!elements.editTitleDialog || !elements.editTitleInput) return;
         
-        // Nur aus der Sidebar entfernen (nicht aus dem Chat)
-        const jumpItem = elements.chatJumpsList.querySelector(`li[data-message-index="${messageIndex}"]`);
-        if (jumpItem) {
-            jumpItem.remove();
+        elements.editTitleInput.value = currentTitle;
+        elements.editTitleDialog.style.display = "block";
+
+        const saveHandler = () => {
+            const newTitle = elements.editTitleInput.value.trim();
+            if (newTitle) {
+                // Speichere angepassten Titel für diesen Chat und Nachricht
+                chats[chatId].jumpTitles[messageIndex] = newTitle;
+
+                // Aktualisiere die Anzeige in der Sidebar
+                const jumpItem = elements.chatJumpsList.querySelector(`li[data-message-index="${messageIndex}"]`);
+                if (jumpItem) {
+                    jumpItem.querySelector(".jump-item-content").textContent = newTitle;
+                }
+            }
+            elements.editTitleDialog.style.display = "none";
+            elements.saveTitleButton.removeEventListener("click", saveHandler);
+        };
+
+        const cancelHandler = () => {
+            elements.editTitleDialog.style.display = "none";
+            elements.saveTitleButton.removeEventListener("click", saveHandler);
+        };
+
+        elements.saveTitleButton.addEventListener("click", saveHandler);
+        elements.cancelTitleButton.addEventListener("click", cancelHandler);
+    }
+
+    function removeJumpItem(chatId, messageIndex) {
+        if (!confirm("Diesen Eintrag aus dem Verlauf entfernen? Die Nachricht bleibt im Chat erhalten.")) return;
+        
+        // Lösche nur den angepassten Titel falls vorhanden
+        if (chats[chatId].jumpTitles[messageIndex]) {
+            delete chats[chatId].jumpTitles[messageIndex];
         }
+
+        // Aktualisiere die Sidebar-Anzeige
+        updateChatDisplay(chatId);
     }
 
     function scrollToMessage(messageIndex) {
@@ -193,40 +243,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    function showEditTitleDialog(chatId, messageIndex, currentTitle) {
-        if (!elements.editTitleDialog || !elements.editTitleInput) return;
-        
-        elements.editTitleInput.value = currentTitle;
-        elements.editTitleDialog.style.display = "block";
-        
-        // Temporäre Event-Listener für Speichern/Abbrechen
-        const saveHandler = () => {
-            const newTitle = elements.editTitleInput.value.trim();
-            if (newTitle) {
-                // Update im Chat-Storage
-                chats[chatId].jumpTitles[messageIndex] = newTitle;
-                
-                // Update in der Sidebar
-                const jumpItem = elements.chatJumpsList.querySelector(`li[data-message-index="${messageIndex}"]`);
-                if (jumpItem) {
-                    jumpItem.querySelector('.jump-item-content').textContent = newTitle;
-                }
-            }
-            elements.editTitleDialog.style.display = "none";
-            elements.saveTitleButton.removeEventListener("click", saveHandler);
-            elements.cancelTitleButton.removeEventListener("click", cancelHandler);
-        };
-        
-        const cancelHandler = () => {
-            elements.editTitleDialog.style.display = "none";
-            elements.saveTitleButton.removeEventListener("click", saveHandler);
-            elements.cancelTitleButton.removeEventListener("click", cancelHandler);
-        };
-        
-        elements.saveTitleButton.addEventListener("click", saveHandler);
-        elements.cancelTitleButton.addEventListener("click", cancelHandler);
-    }
-
     // ========== NACHRICHTENFUNKTIONEN ========== //
     function addMessage(role, content) {
         if (currentChatId === null) {
@@ -243,15 +259,22 @@ document.addEventListener('DOMContentLoaded', function() {
 
         if (role === "user") {
             addJumpItem(currentChatId, messageIndex, content);
+
+            // Automatische Bot-Antwort
             setTimeout(() => {
+                const botResponseIndex = chats[currentChatId].messages.length;
                 const botResponse = generateBotResponse(content);
-                addMessage("bot", botResponse);
+                chats[currentChatId].messages.push({ role: "bot", content: botResponse });
+                addMessageToOutput("bot", botResponse, botResponseIndex);
             }, 400);
+        }
+
+        if (elements.chatOutput) {
+            elements.chatOutput.scrollTop = elements.chatOutput.scrollHeight;
         }
     }
 
     function generateBotResponse(userMessage) {
-        // Hier würde die tatsächliche KI-Integration stattfinden
         return `Ich habe Ihre Nachricht erhalten: "${userMessage}". Wie kann ich Ihnen helfen?`;
     }
 
@@ -270,45 +293,48 @@ document.addEventListener('DOMContentLoaded', function() {
         if (!elements.exportOptions) return;
         
         elements.exportOptions.style.display = 
-            elements.exportOptions.style.display === "block" ? "none" : "block";
+            elements.exportOptions.style.display === "none" ? "flex" : "none";
     }
 
-    function exportChat(format) {
+    function exportChatAs(format) {
         if (!currentChatId || !chats[currentChatId]) return;
         
-        let exportContent = "";
         const chat = chats[currentChatId];
+        const messages = chat?.messages ?? [];
+
+        let content, type, extension;
         
         switch(format) {
-            case "txt":
-                chat.messages.forEach(msg => {
-                    exportContent += `${msg.role}: ${msg.content}\n\n`;
-                });
-                downloadFile(`chat_${currentChatId}.txt`, exportContent);
-                break;
             case "json":
-                downloadFile(`chat_${currentChatId}.json`, JSON.stringify(chat, null, 2));
+                content = JSON.stringify(messages, null, 2);
+                type = "application/json";
+                extension = "json";
+                break;
+            case "txt":
+                content = messages.map(m => `${m.role === "user" ? "DU: " : "BOT: "}${m.content}`).join("\n");
+                type = "text/plain";
+                extension = "txt";
                 break;
             case "csv":
-                exportContent = "Rolle,Inhalt\n";
-                chat.messages.forEach(msg => {
-                    exportContent += `"${msg.role}","${msg.content.replace(/"/g, '""')}"\n`;
-                });
-                downloadFile(`chat_${currentChatId}.csv`, exportContent);
+                content = "Rolle,Nachricht\n" + 
+                         messages.map(m => `${m.role},"${m.content.replace(/"/g, '""')}"`).join("\n");
+                type = "text/csv";
+                extension = "csv";
                 break;
+            default:
+                return;
         }
-        
+
+        downloadFile(`${chat.name}.${extension}`, content, type);
         elements.exportOptions.style.display = "none";
     }
 
-    function downloadFile(filename, content) {
-        const blob = new Blob([content], { type: "text/plain" });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement("a");
-        a.href = url;
-        a.download = filename;
-        a.click();
-        URL.revokeObjectURL(url);
+    function downloadFile(filename, content, type) {
+        const blob = new Blob([content], { type });
+        const link = document.createElement("a");
+        link.href = URL.createObjectURL(blob);
+        link.download = filename;
+        link.click();
     }
 
     // ========== DATENKAMMER ========== //
@@ -405,7 +431,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // Event-Listener für Export-Optionen
         document.querySelectorAll('.export-option').forEach(btn => {
             btn.addEventListener('click', () => {
-                exportChat(btn.dataset.format);
+                exportChatAs(btn.dataset.format);
             });
         });
     }
