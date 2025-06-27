@@ -13,25 +13,22 @@
       <div class="sidebar-padding">
         <h2>Chats</h2>
         <ul id="chat-list">
+          <!-- Chats werden dynamisch eingefügt -->
+        </ul>
         <button id="new-chat-button">➕ Neuer Chat</button>
+        
         <div id="chat-history-container">
           <h2>Chatverlauf</h2>
           <ul id="chat-jumps-list">
-            <li class="jump-item" data-message-index="0">
-              <span>Erste Nachricht</span>
-              <div>
-                <button class="edit-jump">✏️</button>
-                <button class="delete-jump">🗑️</button>
-              </div>
-            </li>
+            <!-- Chatverlauf wird dynamisch eingefügt -->
           </ul>
         </div>
       </div>
     </aside>
 
     <!-- Toggle-Buttons -->
-    <button id="toggle-sidebar" class="sidebar-toggle">☰</button>
-    <button id="toggle-questionnaire-sidebar" class="sidebar-toggle right">+</button>
+    <button id="toggle-sidebar" class="sidebar-toggle left-toggle">☰</button>
+    <button id="toggle-questionnaire-sidebar" class="sidebar-toggle right-toggle">+</button>
 
     <!-- Hauptbereich -->
     <div id="main-area">
@@ -41,32 +38,20 @@
 
       <section id="chat-container">
         <div class="chat-header-row">
-          <h2>Aktueller Chat: <span>Hauptchat</span></h2>
-          <button id="export-button">📤 Export</button>
+          <h2>Aktueller Chat: <span id="current-chat-title">Neuer Chat</span></h2>
+          <div class="header-buttons">
+            <button id="export-button">📤 Export</button>
+          </div>
         </div>
 
         <div id="export-options" style="display:none;">
-          <button data-format="json">JSON</button>
-          <button data-format="txt">TXT</button>
-          <button data-format="csv">CSV</button>
+          <button class="export-option" data-format="json">JSON</button>
+          <button class="export-option" data-format="txt">TXT</button>
+          <button class="export-option" data-format="csv">CSV</button>
         </div>
 
         <div id="chat-output">
-          <!-- Beispiel-Nachrichten -->
-          <div class="message bot">
-            <div class="bot-avatar">
-              <img src="./Profil.png" alt="V.I.T.A.L" />
-            </div>
-            <div class="message-content">
-              Hallo! Ich bin V.I.T.A.L. Wie kann ich helfen?
-            </div>
-          </div>
-          
-          <div class="message user">
-            <div class="message-content">
-              Können Sie mir bei meinem Projekt helfen?
-            </div>
-          </div>
+          <!-- Nachrichten werden dynamisch eingefügt -->
         </div>
 
         <div id="input-area">
@@ -80,35 +65,36 @@
     <aside id="questionnaire-sidebar">
       <div class="sidebar-header">
         <h2>Fragebogen</h2>
-        <!-- Vorhandene Buttons ersetzen durch: -->
-        <button id="toggle-sidebar" class="sidebar-toggle left-toggle">☰</button>
-        <button id="toggle-questionnaire-sidebar" class="sidebar-toggle right-toggle">+</button>
+        <button class="close-sidebar">×</button>
       </div>
       
       <div class="sidebar-content">
         <div class="data-pair-container">
-          <input type="text" placeholder="Feldname">
-          <input type="text" placeholder="Wert">
+          <input type="text" class="data-key-input" placeholder="Feldname">
+          <input type="text" class="data-value-input" placeholder="Wert">
         </div>
         
         <div class="feedback-container">
-          <textarea placeholder="Ihr Feedback..."></textarea>
+          <textarea id="feedback-input" class="feedback-input" placeholder="Ihr Feedback..."></textarea>
         </div>
         
         <div class="sidebar-controls">
-          <button id="add-questionnaire-field">+ Feld hinzufügen</button>
-          <button id="questionnaire-save">Speichern</button>
+          <button id="add-questionnaire-field" class="add-field-btn">+ Feld hinzufügen</button>
+          <div class="action-buttons">
+            <button id="questionnaire-cancel" class="secondary-button">Abbrechen</button>
+            <button id="questionnaire-save" class="primary-button">Speichern</button>
+          </div>
         </div>
       </div>
     </aside>
 
-    <!-- Edit Dialog -->
-    <div id="edit-dialog" style="display:none;">
+    <!-- Edit Dialog für Sprungtitel -->
+    <div id="edit-jump-title-dialog" class="edit-dialog" style="display:none;">
       <h3>Titel bearbeiten</h3>
-      <input type="text" id="edit-title-input">
-      <div>
-        <button id="save-edit">Speichern</button>
-        <button id="cancel-edit">Abbrechen</button>
+      <input type="text" id="edit-jump-title-input">
+      <div class="edit-dialog-buttons">
+        <button id="save-jump-title" class="primary-button">Speichern</button>
+        <button id="cancel-jump-title" class="secondary-button">Abbrechen</button>
       </div>
     </div>
   </div>
