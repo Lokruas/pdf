@@ -4,125 +4,121 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>V.I.T.A.L</title>
-  <link rel="stylesheet" href="./style.css" />
+  <link rel="stylesheet" href="./Antoherone.css" />
 </head>
 <body>
   <div id="app">
-    <!-- Linke Sidebar - Chats -->
-    <aside id="sidebar" class="collapsed">
-      <div class="sidebar-padding"></div>
-      <h2>Chats</h2>
-      <ul id="chat-list"></ul>
-      <button id="new-chat-button">➕ Neuer Chat</button>
+    <!-- Linke Sidebar - Chats und Verlauf -->
+    <aside id="sidebar">
+      <div class="sidebar-padding">
+        <h2>Chats</h2>
+        <ul id="chat-list">
+          <li class="chat-item active" data-chat-id="chat-1">
+            <span class="chat-name">Hauptchat</span>
+          </li>
+          <li class="chat-item" data-chat-id="chat-2">
+            <span class="chat-name">Projektberatung</span>
+          </li>
+        </ul>
+        <button id="new-chat-button">➕ Neuer Chat</button>
+        
+        <div id="chat-history-container">
+          <h2>Chatverlauf</h2>
+          <ul id="chat-jumps-list">
+            <li class="jump-item" data-message-index="0">
+              <span>Erste Nachricht</span>
+              <div>
+                <button class="edit-jump">✏️</button>
+                <button class="delete-jump">🗑️</button>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
     </aside>
 
-    <!-- Toggle Sidebar Buttons -->
+    <!-- Toggle-Buttons -->
     <button id="toggle-sidebar" class="sidebar-toggle">☰</button>
-    <button id="toggle-jumps-sidebar" class="sidebar-toggle right">📋</button>
+    <button id="toggle-questionnaire-sidebar" class="sidebar-toggle right">+</button>
 
     <!-- Hauptbereich -->
     <div id="main-area">
-      <!-- Header mit Banner -->
       <header id="chat-header">
-        <img src="./banner.jpg" alt="Banner" class="banner-icon" />
+        <img src="./banner.jpg" alt="V.I.T.A.L Banner" class="banner-icon" />
       </header>
 
-      <!-- Chatcontainer -->
       <section id="chat-container">
         <div class="chat-header-row">
-          <h1>Hey, ich bin V.I.T.A.L. Wie kann ich dir helfen?</h1>
-          <div class="header-buttons">
-            <button id="export-button" title="Exportieren">📤 Export</button>
-            <button id="data-chamber-button" title="Datenkammer öffnen">+ Daten</button>
+          <h2>Aktueller Chat: <span>Hauptchat</span></h2>
+          <button id="export-button">📤 Export</button>
+        </div>
+
+        <div id="export-options" style="display:none;">
+          <button data-format="json">JSON</button>
+          <button data-format="txt">TXT</button>
+          <button data-format="csv">CSV</button>
+        </div>
+
+        <div id="chat-output">
+          <!-- Beispiel-Nachrichten -->
+          <div class="message bot">
+            <div class="bot-avatar">
+              <img src="./Profil.png" alt="V.I.T.A.L" />
+            </div>
+            <div class="message-content">
+              Hallo! Ich bin V.I.T.A.L. Wie kann ich helfen?
+            </div>
+          </div>
+          
+          <div class="message user">
+            <div class="message-content">
+              Können Sie mir bei meinem Projekt helfen?
+            </div>
           </div>
         </div>
 
-        <!-- Export-Formate -->
-        <div id="export-options" style="display: none;">
-          <button class="export-option" data-format="json">JSON</button>
-          <button class="export-option" data-format="txt">TXT</button>
-          <button class="export-option" data-format="csv">CSV</button>
-        </div>
-
-        <!-- Verlauf -->
-        <div id="chat-output"></div>
-
-        <!-- Eingabefeld + Senden -->
         <div id="input-area">
-          <textarea id="user-input" placeholder="Frage eingeben..." autofocus></textarea>
+          <textarea id="user-input" placeholder="Ihre Nachricht..." autofocus></textarea>
           <button id="send-button">Senden</button>
         </div>
       </section>
     </div>
 
-    <!-- Rechte Sidebar - Chatsprünge -->
-    <aside id="chat-jumps-sidebar" class="collapsed">
+    <!-- Rechte Sidebar - Fragebogen -->
+    <aside id="questionnaire-sidebar">
       <div class="sidebar-header">
-        <h2>Chatverlauf</h2>
-        <button id="close-jumps-sidebar" class="close-sidebar">×</button>
+        <h2>Fragebogen</h2>
+        <button class="close-sidebar">×</button>
       </div>
-      <ul id="chat-jumps-list"></ul>
+      
+      <div class="sidebar-content">
+        <div class="data-pair-container">
+          <input type="text" placeholder="Feldname">
+          <input type="text" placeholder="Wert">
+        </div>
+        
+        <div class="feedback-container">
+          <textarea placeholder="Ihr Feedback..."></textarea>
+        </div>
+        
+        <div class="sidebar-controls">
+          <button id="add-questionnaire-field">+ Feld hinzufügen</button>
+          <button id="questionnaire-save">Speichern</button>
+        </div>
+      </div>
     </aside>
 
-    <!-- Bearbeitungsdialog für Sprungtitel -->
-    <div id="edit-jump-title-dialog" class="edit-dialog" style="display: none;">
+    <!-- Edit Dialog -->
+    <div id="edit-dialog" style="display:none;">
       <h3>Titel bearbeiten</h3>
-      <input type="text" id="edit-jump-title-input">
-      <div class="edit-dialog-buttons">
-        <button id="save-jump-title">Speichern</button>
-        <button id="cancel-jump-title">Abbrechen</button>
-      </div>
-    </div>
-
-    <!-- Datenkammer Modal -->
-    <div id="data-chamber">
-      <div id="data-chamber-content">
-        <div id="data-chamber-header">
-          <img src="Profil.png" alt="Profil" />
-          <h2>Datenkammer</h2>
-          <button id="data-chamber-close">×</button>
-        </div>
-        
-        <div id="data-chamber-info" style="display: none;">
-          <h3>Informationen</h3>
-          <p>Daten werden als JSON gespeichert und mit dem aktuellen Lead verknüpft.</p>
-        </div>
-        
-        <div id="data-chamber-body">
-          <!-- 5 Feldpaare als Standard -->
-          <div class="data-pair-container">
-            <input type="text" class="data-key-input" placeholder="Feldname (z.B. 'Name')">
-            <input type="text" class="data-value-input" placeholder="Wert">
-          </div>
-          <div class="data-pair-container">
-            <input type="text" class="data-key-input" placeholder="Feldname (z.B. 'Email')">
-            <input type="text" class="data-value-input" placeholder="Wert">
-          </div>
-          <div class="data-pair-container">
-            <input type="text" class="data-key-input" placeholder="Feldname (z.B. 'Telefon')">
-            <input type="text" class="data-value-input" placeholder="Wert">
-          </div>
-          <div class="data-pair-container">
-            <input type="text" class="data-key-input" placeholder="Feldname">
-            <input type="text" class="data-value-input" placeholder="Wert">
-          </div>
-          <div class="data-pair-container">
-            <input type="text" class="data-key-input" placeholder="Feldname">
-            <input type="text" class="data-value-input" placeholder="Wert">
-          </div>
-        </div>
-
-        <div id="data-chamber-controls">
-          <button id="data-chamber-cancel" class="secondary-button">Abbrechen</button>
-          <div>
-            <button id="data-chamber-info-button" class="info-button">ℹ Info</button>
-            <button id="data-chamber-save" class="primary-button">💾 Speichern</button>
-          </div>
-        </div>
+      <input type="text" id="edit-title-input">
+      <div>
+        <button id="save-edit">Speichern</button>
+        <button id="cancel-edit">Abbrechen</button>
       </div>
     </div>
   </div>
 
-  <script src="./script.js"></script>
+  <script src="./Antoherone.js"></script>
 </body>
 </html>
