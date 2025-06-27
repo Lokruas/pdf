@@ -235,7 +235,6 @@ function generateBotResponse(userMessage) {
   // Hier würde normalerweise die API-Anfrage stehen
   // Für Demo-Zwecke eine einfache Antwort
   return `Ich habe Ihre Nachricht erhalten: "${userMessage}". Dies ist eine automatische Antwort.`;
-  return `"${userMessage}".`;
 }
 
 function sendMessage() {
