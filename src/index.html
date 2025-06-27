@@ -8,7 +8,7 @@
 </head>
 <body>
   <div id="app">
-    <!-- Linke Sidebar -->
+    <!-- Linke Sidebar - Chats -->
     <aside id="sidebar" class="collapsed">
       <div class="sidebar-padding"></div>
       <h2>Chats</h2>
@@ -16,30 +16,35 @@
       <button id="new-chat-button">➕ Neuer Chat</button>
     </aside>
 
-    <!-- Sidebar-Toggles -->
+    <!-- Toggle Sidebar Buttons -->
     <button id="toggle-sidebar" class="sidebar-toggle">☰</button>
     <button id="toggle-jumps-sidebar" class="sidebar-toggle right">📋</button>
 
     <!-- Hauptbereich -->
     <div id="main-area">
+      <!-- Header mit Banner -->
       <header id="chat-header">
         <img src="./banner.jpg" alt="Banner" class="banner-icon" />
       </header>
 
+      <!-- Chatcontainer -->
       <section id="chat-container">
         <div class="chat-header-row">
           <h1>Hey, ich bin V.I.T.A.L. Wie kann ich dir helfen?</h1>
           <button id="export-button" title="Exportieren">📤</button>
         </div>
 
+        <!-- Export-Formate -->
         <div id="export-options" style="display: none;">
           <button class="export-option" data-format="json">JSON</button>
           <button class="export-option" data-format="txt">TXT</button>
           <button class="export-option" data-format="csv">CSV</button>
         </div>
 
+        <!-- Verlauf -->
         <div id="chat-output"></div>
 
+        <!-- Eingabefeld + Senden -->
         <div id="input-area">
           <textarea id="user-input" placeholder="Frage eingeben..." autofocus></textarea>
           <button id="send-button">Senden</button>
@@ -48,7 +53,7 @@
       </section>
     </div>
 
-    <!-- Rechte Sidebar für Sprünge -->
+    <!-- Rechte Sidebar - Chatsprünge -->
     <aside id="chat-jumps-sidebar" class="collapsed">
       <div class="sidebar-header">
         <h2>Chatverlauf</h2>
@@ -56,7 +61,7 @@
       <ul id="chat-jumps-list"></ul>
     </aside>
 
-    <!-- Dialog zum Bearbeiten von Sprungtiteln -->
+    <!-- Bearbeitungsdialog für Sprungtitel -->
     <div id="edit-jump-title-dialog" class="edit-dialog" style="display: none;">
       <h3>Titel bearbeiten</h3>
       <input type="text" id="edit-jump-title-input">
@@ -66,21 +71,21 @@
       </div>
     </div>
 
-    <!-- Datenkammer -->
-    <div id="data-chamber" style="display: none;">
+    <!-- Datenkammer Modal -->
+    <div id="data-chamber">
       <div id="data-chamber-content">
         <div id="data-chamber-header">
           <h2>Datenkammer</h2>
           <button id="data-chamber-close">×</button>
         </div>
-
+        
         <div id="data-chamber-info" style="display: none;">
           <h3>Informationen</h3>
           <p>Daten werden als JSON gespeichert und mit dem aktuellen Lead verknüpft.</p>
         </div>
-
+        
         <div id="data-chamber-body">
-          <!-- Dynamische Eingabefelder -->
+          <!-- Dynamische Felder kommen hierhin -->
         </div>
 
         <div id="data-chamber-controls">
