@@ -362,11 +362,14 @@ body {
 }
 
 .message-user {
-  background-color: var(--accent-teal);
+  background-color: #2dd4bf; /* Türkis-Blau */
   color: white;
-  margin-left: auto;
-  border-radius: 18px 18px 0 18px;
+  margin-left: auto; /* Nach rechts schieben */
+  border-radius: 18px 18px 0 18px; /* Abgerundete Ecken rechts */
   align-self: flex-end;
+  max-width: 80%;
+  padding: 15px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
 .message-bot {
