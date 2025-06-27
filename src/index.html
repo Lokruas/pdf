@@ -31,7 +31,10 @@
       <section id="chat-container">
         <div class="chat-header-row">
           <h1>Hey, ich bin V.I.T.A.L. Wie kann ich dir helfen?</h1>
-          <button id="export-button" title="Exportieren">📤</button>
+          <div class="header-buttons">
+            <button id="export-button" title="Exportieren">📤 Export</button>
+            <button id="data-chamber-button" title="Datenkammer öffnen">+ Daten</button>
+          </div>
         </div>
 
         <!-- Export-Formate -->
@@ -48,7 +51,6 @@
         <div id="input-area">
           <textarea id="user-input" placeholder="Frage eingeben..." autofocus></textarea>
           <button id="send-button">Senden</button>
-          <button id="data-chamber-button" title="Datenkammer öffnen">+</button>
         </div>
       </section>
     </div>
@@ -57,6 +59,7 @@
     <aside id="chat-jumps-sidebar" class="collapsed">
       <div class="sidebar-header">
         <h2>Chatverlauf</h2>
+        <button id="close-jumps-sidebar" class="close-sidebar">×</button>
       </div>
       <ul id="chat-jumps-list"></ul>
     </aside>
@@ -85,14 +88,34 @@
         </div>
         
         <div id="data-chamber-body">
-          <!-- Dynamische Felder kommen hierhin -->
+          <!-- 5 Feldpaare als Standard -->
+          <div class="data-pair-container">
+            <input type="text" class="data-key-input" placeholder="Feldname (z.B. 'Name')">
+            <input type="text" class="data-value-input" placeholder="Wert">
+          </div>
+          <div class="data-pair-container">
+            <input type="text" class="data-key-input" placeholder="Feldname (z.B. 'Email')">
+            <input type="text" class="data-value-input" placeholder="Wert">
+          </div>
+          <div class="data-pair-container">
+            <input type="text" class="data-key-input" placeholder="Feldname (z.B. 'Telefon')">
+            <input type="text" class="data-value-input" placeholder="Wert">
+          </div>
+          <div class="data-pair-container">
+            <input type="text" class="data-key-input" placeholder="Feldname">
+            <input type="text" class="data-value-input" placeholder="Wert">
+          </div>
+          <div class="data-pair-container">
+            <input type="text" class="data-key-input" placeholder="Feldname">
+            <input type="text" class="data-value-input" placeholder="Wert">
+          </div>
         </div>
 
         <div id="data-chamber-controls">
-          <button id="data-chamber-cancel">Abbrechen</button>
+          <button id="data-chamber-cancel" class="secondary-button">Abbrechen</button>
           <div>
-            <button id="data-chamber-info-button">ℹ Info</button>
-            <button id="data-chamber-save">Speichern</button>
+            <button id="data-chamber-info-button" class="info-button">ℹ Info</button>
+            <button id="data-chamber-save" class="primary-button">💾 Speichern</button>
           </div>
         </div>
       </div>
