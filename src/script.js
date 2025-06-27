@@ -107,6 +107,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
             const avatar = document.createElement("div");
             avatar.className = "bot-avatar";
+            avatar.textContent = "V"; // V für V.I.T.A.L
 
             const messageContent = document.createElement("div");
             messageContent.className = "bot-message-content";
@@ -125,6 +126,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         const jumpItem = document.createElement("li");
         jumpItem.className = "jump-item";
+        jumpItem.dataset.messageIndex = messageIndex;
 
         const contentSpan = document.createElement("span");
         contentSpan.className = "jump-item-content";
@@ -165,18 +167,19 @@ document.addEventListener('DOMContentLoaded', function() {
         if (!confirm("Möchten Sie diesen Eintrag wirklich aus der Sidebar löschen?")) return;
         
         // Nur aus der Sidebar entfernen (nicht aus dem Chat)
-        const jumpItems = elements.chatJumpsList.querySelectorAll('li');
-        jumpItems.forEach(item => {
-            if (parseInt(item.querySelector('span').dataset.messageIndex) === messageIndex) {
-                item.remove();
-            }
-        });
+        const jumpItem = elements.chatJumpsList.querySelector(`li[data-message-index="${messageIndex}"]`);
+        if (jumpItem) {
+            jumpItem.remove();
+        }
     }
 
     function scrollToMessage(messageIndex) {
         const messages = document.querySelectorAll("#chat-output > div");
         if (messages.length > messageIndex) {
-            messages[messageIndex].scrollIntoView({ behavior: "smooth", block: "center" });
+            messages[messageIndex].scrollIntoView({ 
+                behavior: "smooth", 
+                block: "center" 
+            });
         }
     }
 
@@ -188,6 +191,40 @@ document.addEventListener('DOMContentLoaded', function() {
         if (chatElement) {
             chatElement.textContent = newName;
         }
+    }
+
+    function showEditTitleDialog(chatId, messageIndex, currentTitle) {
+        if (!elements.editTitleDialog || !elements.editTitleInput) return;
+        
+        elements.editTitleInput.value = currentTitle;
+        elements.editTitleDialog.style.display = "block";
+        
+        // Temporäre Event-Listener für Speichern/Abbrechen
+        const saveHandler = () => {
+            const newTitle = elements.editTitleInput.value.trim();
+            if (newTitle) {
+                // Update im Chat-Storage
+                chats[chatId].jumpTitles[messageIndex] = newTitle;
+                
+                // Update in der Sidebar
+                const jumpItem = elements.chatJumpsList.querySelector(`li[data-message-index="${messageIndex}"]`);
+                if (jumpItem) {
+                    jumpItem.querySelector('.jump-item-content').textContent = newTitle;
+                }
+            }
+            elements.editTitleDialog.style.display = "none";
+            elements.saveTitleButton.removeEventListener("click", saveHandler);
+            elements.cancelTitleButton.removeEventListener("click", cancelHandler);
+        };
+        
+        const cancelHandler = () => {
+            elements.editTitleDialog.style.display = "none";
+            elements.saveTitleButton.removeEventListener("click", saveHandler);
+            elements.cancelTitleButton.removeEventListener("click", cancelHandler);
+        };
+        
+        elements.saveTitleButton.addEventListener("click", saveHandler);
+        elements.cancelTitleButton.addEventListener("click", cancelHandler);
     }
 
     // ========== NACHRICHTENFUNKTIONEN ========== //
@@ -214,6 +251,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function generateBotResponse(userMessage) {
+        // Hier würde die tatsächliche KI-Integration stattfinden
         return `Ich habe Ihre Nachricht erhalten: "${userMessage}". Wie kann ich Ihnen helfen?`;
     }
 
@@ -241,13 +279,23 @@ document.addEventListener('DOMContentLoaded', function() {
         let exportContent = "";
         const chat = chats[currentChatId];
         
-        if (format === "txt") {
-            chat.messages.forEach(msg => {
-                exportContent += `${msg.role}: ${msg.content}\n\n`;
-            });
-            downloadFile(`chat_${currentChatId}.txt`, exportContent);
-        } else if (format === "json") {
-            downloadFile(`chat_${currentChatId}.json`, JSON.stringify(chat, null, 2));
+        switch(format) {
+            case "txt":
+                chat.messages.forEach(msg => {
+                    exportContent += `${msg.role}: ${msg.content}\n\n`;
+                });
+                downloadFile(`chat_${currentChatId}.txt`, exportContent);
+                break;
+            case "json":
+                downloadFile(`chat_${currentChatId}.json`, JSON.stringify(chat, null, 2));
+                break;
+            case "csv":
+                exportContent = "Rolle,Inhalt\n";
+                chat.messages.forEach(msg => {
+                    exportContent += `"${msg.role}","${msg.content.replace(/"/g, '""')}"\n`;
+                });
+                downloadFile(`chat_${currentChatId}.csv`, exportContent);
+                break;
         }
         
         elements.exportOptions.style.display = "none";
@@ -269,7 +317,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         elements.dataChamberBody.innerHTML = '';
         
-        // 5 leere Feldpaare erstellen
+        // 5 Feldpaare als Standard
         for (let i = 0; i < 5; i++) {
             addDataPair();
         }
@@ -341,18 +389,25 @@ document.addEventListener('DOMContentLoaded', function() {
 
     if (elements.toggleJumpsSidebarButton && elements.chatJumpsSidebar) {
         elements.toggleJumpsSidebarButton.addEventListener("click", () => {
-            elements.chatJumpsSidebar.style.display = "block";
+            elements.chatJumpsSidebar.classList.toggle("collapsed");
         });
     }
 
     if (elements.closeJumpsSidebarButton && elements.chatJumpsSidebar) {
         elements.closeJumpsSidebarButton.addEventListener("click", () => {
-            elements.chatJumpsSidebar.style.display = "none";
+            elements.chatJumpsSidebar.classList.add("collapsed");
         });
     }
 
     if (elements.exportButton && elements.exportOptions) {
         elements.exportButton.addEventListener("click", showExportOptions);
+        
+        // Event-Listener für Export-Optionen
+        document.querySelectorAll('.export-option').forEach(btn => {
+            btn.addEventListener('click', () => {
+                exportChat(btn.dataset.format);
+            });
+        });
     }
 
     if (elements.dataChamberButton && elements.dataChamber) {
