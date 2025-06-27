@@ -103,41 +103,6 @@
 
   <!-- JavaScript mit DOMContentLoaded -->
   <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      // Hier kommt Ihr gesamter JavaScript-Code
-      // Zustandsvariablen
-      let chats = {};
-      let currentChatId = null;
-      let chatCounter = 0;
-      let waitingForFirstMessage = false;
-      
-      // DOM-Elemente sicher selektieren
-      const getElement = (id) => document.getElementById(id) || console.error(`Element ${id} nicht gefunden`);
-      
-      const chatOutput = getElement('chat-output');
-      const userInput = getElement('user-input');
-      const sendButton = getElement('send-button');
-      // ... restliche Elemente
-
-      // Grundfunktionalität testen
-      console.log('App wird initialisiert...');
-      
-      // Einfache Testfunktion
-      function testFunction() {
-        console.log('Testfunktion wird ausgeführt');
-        const testElement = document.createElement('div');
-        testElement.textContent = 'Test erfolgreich!';
-        if(chatOutput) chatOutput.appendChild(testElement);
-        return true;
-      }
-      
-      // Test ausführen
-      if(testFunction()) {
-        console.log('Grundfunktionalität funktioniert');
-        // Hier den restlichen Code einfügen
-      } else {
-        console.error('Grundfunktionalität fehlgeschlagen');
-      }
       
       // Initialisierung
       createChat("Hauptchat");
