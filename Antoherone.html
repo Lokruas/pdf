@@ -1,124 +1,111 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>V.I.T.A.L</title>
-  <link rel="stylesheet" href="./Antoherone.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>V.I.T.A.L Chat</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div id="app">
-    <!-- Linke Sidebar - Chats und Verlauf -->
-    <aside id="sidebar">
-      <div class="sidebar-padding">
-        <h2>Chats</h2>
-        <ul id="chat-list">
-          <li class="chat-item active" data-chat-id="chat-1">
-            <span class="chat-name">Hauptchat</span>
-          </li>
-          <li class="chat-item" data-chat-id="chat-2">
-            <span class="chat-name">Projektberatung</span>
-          </li>
-        </ul>
-        <button id="new-chat-button">➕ Neuer Chat</button>
+    <div id="app">
+        <!-- Linke Sidebar -->
+        <div id="sidebar">
+            <div class="sidebar-padding">
+                <h2>Chats</h2>
+                <button id="new-chat-button">Neuer Chat</button>
+                
+                <ul id="chat-list">
+                    <li class="active">
+                        <span class="chat-name">Aktueller Chat</span>
+                        <span class="chat-date">Heute</span>
+                    </li>
+                </ul>
+                
+                <div id="chat-history-container">
+                    <h2>Verlauf</h2>
+                    <div id="chat-jumps-list">
+                        <div class="jump-item">
+                            <span class="jump-item-content">Vorheriger Chat</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         
-        <div id="chat-history-container">
-          <h2>Chatverlauf</h2>
-          <ul id="chat-jumps-list">
-            <li class="jump-item" data-message-index="0">
-              <span>Erste Nachricht</span>
-              <div>
-                <button class="edit-jump">✏️</button>
-                <button class="delete-jump">🗑️</button>
-              </div>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </aside>
-
-    <!-- Toggle-Buttons -->
-    <button id="toggle-sidebar" class="sidebar-toggle">☰</button>
-    <button id="toggle-questionnaire-sidebar" class="sidebar-toggle right">+</button>
-
-    <!-- Hauptbereich -->
-    <div id="main-area">
-      <header id="chat-header">
-        <img src="./banner.jpg" alt="V.I.T.A.L Banner" class="banner-icon" />
-      </header>
-
-      <section id="chat-container">
-        <div class="chat-header-row">
-          <h2>Aktueller Chat: <span>Hauptchat</span></h2>
-          <button id="export-button">📤 Export</button>
-        </div>
-
-        <div id="export-options" style="display:none;">
-          <button data-format="json">JSON</button>
-          <button data-format="txt">TXT</button>
-          <button data-format="csv">CSV</button>
-        </div>
-
-        <div id="chat-output">
-          <!-- Beispiel-Nachrichten -->
-          <div class="message bot">
-            <div class="bot-avatar">
-              <img src="./Profil.png" alt="V.I.T.A.L" />
+        <!-- Hauptbereich -->
+        <div id="main-area">
+            <header id="chat-header">
+                <img src="Profil.png" alt="V.I.T.A.L Logo" class="banner-icon">
+                <h1>V.I.T.A.L</h1>
+            </header>
+            
+            <div id="chat-container">
+                <div class="chat-header-row">
+                    <h2>Aktueller Chat: <span id="current-chat-title">Neuer Chat</span></h2>
+                </div>
+                
+                <div id="chat-output">
+                    <!-- Bot-Nachricht -->
+                    <div class="message message-bot">
+                        <div class="message-header">
+                            <div class="bot-avatar">
+                                <img src="Profil.png" alt="Bot Avatar">
+                            </div>
+                        </div>
+                        <div class="message-content">
+                            Hallo! Wie kann ich Ihnen helfen?
+                        </div>
+                    </div>
+                    
+                    <!-- User-Nachricht -->
+                    <div class="message message-user">
+                        <div class="message-content">
+                            Ich habe eine Frage zu meinem Vertrag.
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="input-area">
+                    <textarea id="user-input" placeholder="Schreiben Sie Ihre Nachricht..."></textarea>
+                    <button id="send-button">Senden</button>
+                </div>
             </div>
-            <div class="message-content">
-              Hallo! Ich bin V.I.T.A.L. Wie kann ich helfen?
-            </div>
-          </div>
-          
-          <div class="message user">
-            <div class="message-content">
-              Können Sie mir bei meinem Projekt helfen?
-            </div>
-          </div>
         </div>
-
-        <div id="input-area">
-          <textarea id="user-input" placeholder="Ihre Nachricht..." autofocus></textarea>
-          <button id="send-button">Senden</button>
+        
+        <!-- Rechte Sidebar (Fragebogen) -->
+        <div id="questionnaire-sidebar" class="collapsed">
+            <div class="sidebar-header">
+                <h2>Fragebogen</h2>
+                <button class="close-sidebar">&times;</button>
+            </div>
+            
+            <div class="sidebar-content">
+                <div id="data-fields-container">
+                    <div class="data-pair-container">
+                        <input type="text" class="data-key-input" placeholder="Feldname">
+                        <input type="text" class="data-value-input" placeholder="Wert">
+                        <button class="remove-field-button">&times;</button>
+                    </div>
+                </div>
+                
+                <div class="feedback-container">
+                    <label for="feedback-input">Anmerkungen</label>
+                    <textarea id="feedback-input" class="feedback-input" placeholder="Zusätzliche Notizen..."></textarea>
+                </div>
+                
+                <div class="sidebar-controls">
+                    <button class="add-field-btn">+ Feld hinzufügen</button>
+                    <div class="action-buttons">
+                        <button class="secondary-button">Abbrechen</button>
+                        <button class="primary-button">Speichern</button>
+                    </div>
+                </div>
+            </div>
         </div>
-      </section>
+        
+        <!-- Sidebar Toggle Buttons -->
+        <button class="sidebar-toggle left-toggle">&equiv;</button>
+        <button class="sidebar-toggle right-toggle">&equiv;</button>
     </div>
-
-    <!-- Rechte Sidebar - Fragebogen -->
-    <aside id="questionnaire-sidebar">
-      <div class="sidebar-header">
-        <h2>Fragebogen</h2>
-        <button class="close-sidebar">×</button>
-      </div>
-      
-      <div class="sidebar-content">
-        <div class="data-pair-container">
-          <input type="text" placeholder="Feldname">
-          <input type="text" placeholder="Wert">
-        </div>
-        
-        <div class="feedback-container">
-          <textarea placeholder="Ihr Feedback..."></textarea>
-        </div>
-        
-        <div class="sidebar-controls">
-          <button id="add-questionnaire-field">+ Feld hinzufügen</button>
-          <button id="questionnaire-save">Speichern</button>
-        </div>
-      </div>
-    </aside>
-
-    <!-- Edit Dialog -->
-    <div id="edit-dialog" style="display:none;">
-      <h3>Titel bearbeiten</h3>
-      <input type="text" id="edit-title-input">
-      <div>
-        <button id="save-edit">Speichern</button>
-        <button id="cancel-edit">Abbrechen</button>
-      </div>
-    </div>
-  </div>
-
-  <script src="./Antoherone.js"></script>
 </body>
 </html>
