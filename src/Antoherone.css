@@ -353,33 +353,30 @@ body {
 }
 
 .message {
-  max-width: 80%;
-  padding: 15px;
-  border-radius: 18px;
-  word-break: break-word;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  position: relative;
+    max-width: 80%;
+    padding: 15px;
+    border-radius: 18px;
+    word-break: break-word;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    position: relative;
 }
 
+/* Stil für Benutzer-Nachrichten (rechts, blau-türkis) */
 .message-user {
-  background-color: #2dd4bf; /* Blautürkis */
-  color: white;
-  margin-left: auto; /* Rechtsbündig */
-  border-radius: 18px 18px 0 18px;
-  max-width: 80%;
-  padding: 15px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  align-self: flex-end; /* Wichtig für Flex-Container */
+    background-color: #2dd4bf; /* Blau-türkis */
+    color: white; /* Weißer Text für besseren Kontrast */
+    margin-left: auto; /* Rechtsbündig */
+    border-radius: 18px 18px 0 18px; /* Abgerundete rechte Ecken */
+    align-self: flex-end; /* Für Flex-Container */
 }
 
+/* Stil für Bot-Nachrichten (links, weiß) */
 .message-bot {
-  background-color: #f0f0f0;
-  margin-right: auto;
-  border-radius: 18px 18px 18px 0;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
+    background-color: white; /* Weißer Hintergrund */
+    color: #333; /* Dunkler Text */
+    margin-right: auto; /* Linksbündig */
+    border-radius: 18px 18px 18px 0; /* Abgerundete linke Ecken */
+    border: 1px solid #e0e0e0; /* Leichter Rand für Abgrenzung */
 
 .message-header {
   display: flex;
