@@ -443,7 +443,7 @@ body {
   position: relative;
 }
 #data-chamber-header img {
-  max-width: 60px; /* oder jede gewünschte Größe, z.B. 50px */
+  max-width: 200px; /* oder jede gewünschte Größe, z.B. 50px */
   height: auto;
   margin: 5px 0; /* Optional: Abstand anpassen */
 }
