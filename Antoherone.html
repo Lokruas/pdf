@@ -1,116 +1,115 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chat-Anwendung</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>V.I.T.A.L</title>
+  <link rel="stylesheet" href="./style.css" />
 </head>
 <body>
-    <div id="app">
-        <!-- Linke Sidebar - Chatauswahl -->
-        <div id="sidebar">
-            <button class="sidebar-toggle" id="toggle-sidebar">☰</button>
-            <div class="sidebar-padding">
-                <h2>Chats</h2>
-                <ul id="chat-list">
-                    <li>Chat 1</li>
-                    <li>Chat 2</li>
-                    <li>Chat 3</li>
-                </ul>
-                <button id="new-chat-button">Neuer Chat</button>
-            </div>
+  <div id="app">
+    <!-- Linke Sidebar - Chats -->
+    <aside id="sidebar" class="collapsed">
+      <div class="sidebar-padding">
+        <h2>Chats</h2>
+        <ul id="chat-list"></ul>
+        <button id="new-chat-button">➕ Neuer Chat</button>
+        
+        <!-- Chatverlauf-Sidebar als Unterbereich -->
+        <div id="chat-history-container">
+          <h2>Chatverlauf</h2>
+          <ul id="chat-jumps-list"></ul>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Toggle Sidebar Buttons -->
+    <button id="toggle-sidebar" class="sidebar-toggle">☰</button>
+    <button id="toggle-questionnaire-sidebar" class="sidebar-toggle right">+</button>
+
+    <!-- Hauptbereich -->
+    <div id="main-area">
+      <!-- Header mit Banner -->
+      <header id="chat-header">
+        <img src="./banner.jpg" alt="Banner" class="banner-icon" />
+      </header>
+
+      <!-- Chatcontainer -->
+      <section id="chat-container">
+        <div class="chat-header-row">
+          <h1>Hey, ich bin V.I.T.A.L. Wie kann ich dir helfen?</h1>
+          <div class="header-buttons">
+            <button id="export-button" title="Exportieren">📤 Export</button>
+          </div>
         </div>
 
-        <!-- Hauptbereich -->
-        <div id="main-area">
-            <!-- Header -->
-            <div id="chat-header">
-                <img src="logo.png" alt="Logo" class="banner-icon">
-            </div>
-
-            <!-- Chat Container -->
-            <div id="chat-container">
-                <div class="chat-header-row">
-                    <h1>Aktueller Chat</h1>
-                    <div class="header-buttons">
-                        <button id="export-button">
-                            <span>Exportieren</span>
-                        </button>
-                    </div>
-                </div>
-
-                <div id="export-options">
-                    <button class="export-option">Als Text</button>
-                    <button class="export-option">Als PDF</button>
-                </div>
-
-                <div id="chat-output">
-                    <!-- Nachrichten werden hier eingefügt -->
-                </div>
-
-                <div id="input-area">
-                    <textarea id="user-input" placeholder="Schreibe eine Nachricht..."></textarea>
-                    <button id="send-button">Senden</button>
-                </div>
-            </div>
+        <!-- Export-Formate -->
+        <div id="export-options" style="display: none;">
+          <button class="export-option" data-format="json">JSON</button>
+          <button class="export-option" data-format="txt">TXT</button>
+          <button class="export-option" data-format="csv">CSV</button>
         </div>
 
-        <!-- Rechte Sidebar - Chatverlauf -->
-        <div id="chat-jumps-sidebar" class="collapsed">
-            <div class="sidebar-header">
-                <h2>Chatverlauf</h2>
-                <button class="close-sidebar">×</button>
-            </div>
-            <ul id="chat-jumps-list">
-                <!-- Chatverlaufseinträge werden hier eingefügt -->
-            </ul>
-        </div>
+        <!-- Verlauf -->
+        <div id="chat-output"></div>
 
-        <!-- Neue Sidebar - Fragebogen -->
-        <div id="questionnaire-sidebar" class="collapsed">
-            <div class="sidebar-header">
-                <h2>Fragebogen</h2>
-                <button class="close-sidebar">×</button>
-            </div>
-            
-            <div class="sidebar-content">
-                <div class="data-pair-container">
-                    <input type="text" class="data-key-input" placeholder="Schlüssel">
-                    <input type="text" class="data-value-input" placeholder="Wert">
-                </div>
-                
-                <div class="data-pair-container">
-                    <input type="text" class="data-key-input" placeholder="Schlüssel">
-                    <input type="text" class="data-value-input" placeholder="Wert">
-                </div>
-                
-                <div class="feedback-container">
-                    <textarea class="feedback-input" placeholder="Dein Feedback... (mindestens 5 Sätze)"></textarea>
-                </div>
-                
-                <div class="sidebar-controls">
-                    <button class="primary-button">Speichern</button>
-                    <button class="secondary-button">Abbrechen</button>
-                </div>
-            </div>
+        <!-- Eingabefeld + Senden -->
+        <div id="input-area">
+          <textarea id="user-input" placeholder="Frage eingeben..." autofocus></textarea>
+          <button id="send-button">Senden</button>
         </div>
-
-        <!-- Toggle-Buttons für die Sidebars -->
-        <button class="sidebar-toggle right" id="toggle-jumps-sidebar">↔</button>
-        <button class="sidebar-toggle right" id="toggle-questionnaire-sidebar">+</button>
+      </section>
     </div>
 
-    <!-- Edit Dialog (bleibt unverändert) -->
-    <div class="edit-dialog" id="edit-dialog">
-        <h3>Chatverlauf bearbeiten</h3>
-        <input type="text" id="edit-jump-title-input" placeholder="Neuer Titel">
-        <div class="edit-dialog-buttons">
-            <button id="edit-save-button">Speichern</button>
-            <button id="edit-cancel-button">Abbrechen</button>
+    <!-- Fragebogen Sidebar -->
+    <aside id="questionnaire-sidebar" class="collapsed">
+      <div class="sidebar-header">
+        <h2>Fragebogen</h2>
+        <button class="close-sidebar">×</button>
+      </div>
+      
+      <div class="sidebar-content">
+        <!-- Standard-Felder -->
+        <div class="data-pair-container">
+          <input type="text" class="data-key-input" placeholder="Feldname (z.B. 'Name')">
+          <input type="text" class="data-value-input" placeholder="Wert">
         </div>
-    </div>
+        <div class="data-pair-container">
+          <input type="text" class="data-key-input" placeholder="Feldname (z.B. 'Email')">
+          <input type="text" class="data-value-input" placeholder="Wert">
+        </div>
+        <div class="data-pair-container">
+          <input type="text" class="data-key-input" placeholder="Feldname (z.B. 'Telefon')">
+          <input type="text" class="data-value-input" placeholder="Wert">
+        </div>
+        
+        <!-- Großes Feedback-Feld -->
+        <div class="feedback-container">
+          <textarea class="feedback-input" placeholder="Ihr Feedback... (mindestens 5 Sätze)"></textarea>
+        </div>
+        
+        <!-- Buttons -->
+        <div class="sidebar-controls">
+          <button id="add-questionnaire-field" class="secondary-button">+ Feld hinzufügen</button>
+          <div>
+            <button id="questionnaire-cancel" class="secondary-button">Abbrechen</button>
+            <button id="questionnaire-save" class="primary-button">Speichern</button>
+          </div>
+        </div>
+      </div>
+    </aside>
 
-    <script src="script.js"></script>
+    <!-- Bearbeitungsdialog für Sprungtitel -->
+    <div id="edit-jump-title-dialog" class="edit-dialog" style="display: none;">
+      <h3>Titel bearbeiten</h3>
+      <input type="text" id="edit-jump-title-input">
+      <div class="edit-dialog-buttons">
+        <button id="save-jump-title">Speichern</button>
+        <button id="cancel-jump-title">Abbrechen</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="./script.js"></script>
 </body>
 </html>
