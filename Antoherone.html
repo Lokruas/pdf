@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat-Anwendung</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="app">
+        <!-- Linke Sidebar - Chatauswahl -->
+        <div id="sidebar">
+            <button class="sidebar-toggle" id="toggle-sidebar">☰</button>
+            <div class="sidebar-padding">
+                <h2>Chats</h2>
+                <ul id="chat-list">
+                    <li>Chat 1</li>
+                    <li>Chat 2</li>
+                    <li>Chat 3</li>
+                </ul>
+                <button id="new-chat-button">Neuer Chat</button>
+            </div>
+        </div>
+
+        <!-- Hauptbereich -->
+        <div id="main-area">
+            <!-- Header -->
+            <div id="chat-header">
+                <img src="logo.png" alt="Logo" class="banner-icon">
+            </div>
+
+            <!-- Chat Container -->
+            <div id="chat-container">
+                <div class="chat-header-row">
+                    <h1>Aktueller Chat</h1>
+                    <div class="header-buttons">
+                        <button id="export-button">
+                            <span>Exportieren</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div id="export-options">
+                    <button class="export-option">Als Text</button>
+                    <button class="export-option">Als PDF</button>
+                </div>
+
+                <div id="chat-output">
+                    <!-- Nachrichten werden hier eingefügt -->
+                </div>
+
+                <div id="input-area">
+                    <textarea id="user-input" placeholder="Schreibe eine Nachricht..."></textarea>
+                    <button id="send-button">Senden</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Rechte Sidebar - Chatverlauf -->
+        <div id="chat-jumps-sidebar" class="collapsed">
+            <div class="sidebar-header">
+                <h2>Chatverlauf</h2>
+                <button class="close-sidebar">×</button>
+            </div>
+            <ul id="chat-jumps-list">
+                <!-- Chatverlaufseinträge werden hier eingefügt -->
+            </ul>
+        </div>
+
+        <!-- Neue Sidebar - Fragebogen -->
+        <div id="questionnaire-sidebar" class="collapsed">
+            <div class="sidebar-header">
+                <h2>Fragebogen</h2>
+                <button class="close-sidebar">×</button>
+            </div>
+            
+            <div class="sidebar-content">
+                <div class="data-pair-container">
+                    <input type="text" class="data-key-input" placeholder="Schlüssel">
+                    <input type="text" class="data-value-input" placeholder="Wert">
+                </div>
+                
+                <div class="data-pair-container">
+                    <input type="text" class="data-key-input" placeholder="Schlüssel">
+                    <input type="text" class="data-value-input" placeholder="Wert">
+                </div>
+                
+                <div class="feedback-container">
+                    <textarea class="feedback-input" placeholder="Dein Feedback... (mindestens 5 Sätze)"></textarea>
+                </div>
+                
+                <div class="sidebar-controls">
+                    <button class="primary-button">Speichern</button>
+                    <button class="secondary-button">Abbrechen</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Toggle-Buttons für die Sidebars -->
+        <button class="sidebar-toggle right" id="toggle-jumps-sidebar">↔</button>
+        <button class="sidebar-toggle right" id="toggle-questionnaire-sidebar">+</button>
+    </div>
+
+    <!-- Edit Dialog (bleibt unverändert) -->
+    <div class="edit-dialog" id="edit-dialog">
+        <h3>Chatverlauf bearbeiten</h3>
+        <input type="text" id="edit-jump-title-input" placeholder="Neuer Titel">
+        <div class="edit-dialog-buttons">
+            <button id="edit-save-button">Speichern</button>
+            <button id="edit-cancel-button">Abbrechen</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
