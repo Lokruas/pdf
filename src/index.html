@@ -4,7 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>V.I.T.A.L</title>
-  <link rel="stylesheet" href="style.css" />
+  <!-- CSS Pfad korrigieren -->
+  <link rel="stylesheet" href="./style.css" />
 </head>
 <body>
   <div id="app">
@@ -24,7 +25,8 @@
     <div id="main-area">
       <!-- Header mit Banner -->
       <header id="chat-header">
-        <img src="banner.jpg" alt="Banner" class="banner-icon" />
+        <!-- Bildpfad korrigieren -->
+        <img src="./banner.jpg" alt="Banner" class="banner-icon" />
       </header>
 
       <!-- Chatcontainer -->
@@ -46,7 +48,7 @@
 
         <!-- Eingabefeld + Senden -->
         <div id="input-area">
-          <textarea id="user-input" placeholder="Frage eingeben..."></textarea>
+          <textarea id="user-input" placeholder="Frage eingeben..." autofocus></textarea>
           <button id="send-button">Senden</button>
           <button id="data-chamber-button" title="Datenkammer öffnen">+</button>
         </div>
@@ -99,6 +101,47 @@
     </div>
   </div>
 
-  <script src="script.js"></script>
+  <!-- JavaScript mit DOMContentLoaded -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Hier kommt Ihr gesamter JavaScript-Code
+      // Zustandsvariablen
+      let chats = {};
+      let currentChatId = null;
+      let chatCounter = 0;
+      let waitingForFirstMessage = false;
+      
+      // DOM-Elemente sicher selektieren
+      const getElement = (id) => document.getElementById(id) || console.error(`Element ${id} nicht gefunden`);
+      
+      const chatOutput = getElement('chat-output');
+      const userInput = getElement('user-input');
+      const sendButton = getElement('send-button');
+      // ... restliche Elemente
+
+      // Grundfunktionalität testen
+      console.log('App wird initialisiert...');
+      
+      // Einfache Testfunktion
+      function testFunction() {
+        console.log('Testfunktion wird ausgeführt');
+        const testElement = document.createElement('div');
+        testElement.textContent = 'Test erfolgreich!';
+        if(chatOutput) chatOutput.appendChild(testElement);
+        return true;
+      }
+      
+      // Test ausführen
+      if(testFunction()) {
+        console.log('Grundfunktionalität funktioniert');
+        // Hier den restlichen Code einfügen
+      } else {
+        console.error('Grundfunktionalität fehlgeschlagen');
+      }
+      
+      // Initialisierung
+      createChat("Hauptchat");
+    });
+  </script>
 </body>
 </html>
