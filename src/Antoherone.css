@@ -379,7 +379,6 @@ body {
     border: 1px solid #e0e0e0; /* Leichter Rand für Abgrenzung */
 
 .message-header {
-  background-color: white;
   display: flex;
   align-items: center;
   gap: 10px;
