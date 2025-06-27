@@ -125,7 +125,7 @@ body {
 
 /* Header */
 #chat-header {
-  background-color: var(--header-blue);
+  background-color: rgb(6, 27, 43);
   padding: 10px;
   text-align: center;
   height: 130px;
