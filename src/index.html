@@ -54,55 +54,51 @@
     </div>
 
     <!-- Rechte Sidebar - Chatsprünge -->
-    <!-- Rechte Sidebar - Chatsprünge (nur für Organisation) -->
     <aside id="chat-jumps-sidebar" class="collapsed">
       <div class="sidebar-header">
         <h2>Chatverlauf</h2>
-@@ -61,17 +61,17 @@
+      </div>
       <ul id="chat-jumps-list"></ul>
     </aside>
 
     <!-- Bearbeitungsdialog für Sprungtitel -->
-    <div id="edit-title-dialog" class="edit-dialog" style="display: none;">
-    <!-- Dialog für Titelbearbeitung (nur für Sidebar) -->
     <div id="edit-jump-title-dialog" class="edit-dialog" style="display: none;">
       <h3>Titel bearbeiten</h3>
-      <input type="text" id="edit-title-input">
       <input type="text" id="edit-jump-title-input">
       <div class="edit-dialog-buttons">
-        <button id="save-title">Speichern</button>
-        <button id="cancel-title">Abbrechen</button>
         <button id="save-jump-title">Speichern</button>
         <button id="cancel-jump-title">Abbrechen</button>
+      </div>
+    </div>
+
+    <!-- Datenkammer Modal -->
+    <div id="data-chamber">
+      <div id="data-chamber-content">
+        <div id="data-chamber-header">
+          <h2>Datenkammer</h2>
+          <button id="data-chamber-close">×</button>
+        </div>
+        
+        <div id="data-chamber-info" style="display: none;">
+          <h3>Informationen</h3>
+          <p>Daten werden als JSON gespeichert und mit dem aktuellen Lead verknüpft.</p>
+        </div>
+        
+        <div id="data-chamber-body">
+          <!-- Dynamische Felder kommen hierhin -->
+        </div>
+
+        <div id="data-chamber-controls">
+          <button id="data-chamber-cancel">Abbrechen</button>
+          <div>
+            <button id="data-chamber-info-button">ℹ Info</button>
+            <button id="data-chamber-save">Speichern</button>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 
   <script src="script.js"></script>
-  <div id="data-chamber">
-  <div id="data-chamber-content">
-    <div id="data-chamber-header">
-      <h2>Datenkammer</h2>
-      <button id="data-chamber-close">×</button>
-    </div>
-    
-    <div id="data-chamber-info" style="display: none;">
-      <h3>Informationen</h3>
-      <p>Daten werden als JSON gespeichert und mit dem aktuellen Lead verknüpft.</p>
-    </div>
-    
-    <div id="data-chamber-body">
-      <!-- Dynamische Felder kommen hierhin -->
-    </div>
-
-    <div id="data-chamber-controls">
-      <button id="data-chamber-cancel">Abbrechen</button>
-      <div>
-        <button id="data-chamber-info-button">ℹ Info</button>
-        <button id="data-chamber-save">Speichern</button>
-      </div>
-    </div>
-  </div>
-</div>
 </body>
 </html>
