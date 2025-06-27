@@ -6,7 +6,6 @@ document.addEventListener('DOMContentLoaded', function() {
     let currentChatId = null;
     let chatCounter = 0;
     let waitingForFirstMessage = false;
-    let jumpTitles = {};
 
     // DOM-Elemente mit Fehlerbehandlung
     function getElement(id) {
@@ -136,12 +135,22 @@ document.addEventListener('DOMContentLoaded', function() {
 
         const editButton = document.createElement("button");
         editButton.innerHTML = "✏️";
+        editButton.title = "Titel bearbeiten";
         editButton.addEventListener("click", (e) => {
             e.stopPropagation();
             showEditTitleDialog(chatId, messageIndex, contentSpan.textContent);
         });
 
+        const deleteButton = document.createElement("button");
+        deleteButton.innerHTML = "🗑️";
+        deleteButton.title = "Eintrag löschen";
+        deleteButton.addEventListener("click", (e) => {
+            e.stopPropagation();
+            deleteJumpItem(chatId, messageIndex);
+        });
+
         actionsDiv.appendChild(editButton);
+        actionsDiv.appendChild(deleteButton);
         jumpItem.appendChild(contentSpan);
         jumpItem.appendChild(actionsDiv);
 
@@ -152,10 +161,32 @@ document.addEventListener('DOMContentLoaded', function() {
         elements.chatJumpsList.appendChild(jumpItem);
     }
 
+    function deleteJumpItem(chatId, messageIndex) {
+        if (!confirm("Möchten Sie diesen Eintrag wirklich aus der Sidebar löschen?")) return;
+        
+        // Nur aus der Sidebar entfernen (nicht aus dem Chat)
+        const jumpItems = elements.chatJumpsList.querySelectorAll('li');
+        jumpItems.forEach(item => {
+            if (parseInt(item.querySelector('span').dataset.messageIndex) === messageIndex) {
+                item.remove();
+            }
+        });
+    }
+
     function scrollToMessage(messageIndex) {
         const messages = document.querySelectorAll("#chat-output > div");
         if (messages.length > messageIndex) {
             messages[messageIndex].scrollIntoView({ behavior: "smooth", block: "center" });
+        }
+    }
+
+    function updateChatName(chatId, newName) {
+        if (!chats[chatId]) return;
+        
+        chats[chatId].name = newName;
+        const chatElement = document.querySelector(`#chat-list li[data-id="${chatId}"]`);
+        if (chatElement) {
+            chatElement.textContent = newName;
         }
     }
 
@@ -196,22 +227,52 @@ document.addEventListener('DOMContentLoaded', function() {
         elements.userInput.value = "";
     }
 
+    // ========== EXPORT-FUNKTIONEN ========== //
+    function showExportOptions() {
+        if (!elements.exportOptions) return;
+        
+        elements.exportOptions.style.display = 
+            elements.exportOptions.style.display === "block" ? "none" : "block";
+    }
+
+    function exportChat(format) {
+        if (!currentChatId || !chats[currentChatId]) return;
+        
+        let exportContent = "";
+        const chat = chats[currentChatId];
+        
+        if (format === "txt") {
+            chat.messages.forEach(msg => {
+                exportContent += `${msg.role}: ${msg.content}\n\n`;
+            });
+            downloadFile(`chat_${currentChatId}.txt`, exportContent);
+        } else if (format === "json") {
+            downloadFile(`chat_${currentChatId}.json`, JSON.stringify(chat, null, 2));
+        }
+        
+        elements.exportOptions.style.display = "none";
+    }
+
+    function downloadFile(filename, content) {
+        const blob = new Blob([content], { type: "text/plain" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = filename;
+        a.click();
+        URL.revokeObjectURL(url);
+    }
+
     // ========== DATENKAMMER ========== //
     function initializeDataChamber() {
         if (!elements.dataChamberBody) return;
         
         elements.dataChamberBody.innerHTML = '';
         
-        // Lückenbüßer: 3 Test-Datenpaare
-        const testData = [
-            { key: "name", value: "Max Mustermann" },
-            { key: "email", value: "max@example.com" },
-            { key: "interesse", value: "Produkt X" }
-        ];
-        
-        testData.forEach(pair => {
-            addDataPair(pair.key, pair.value);
-        });
+        // 5 leere Feldpaare erstellen
+        for (let i = 0; i < 5; i++) {
+            addDataPair();
+        }
     }
 
     function addDataPair(key = "", value = "") {
@@ -276,6 +337,22 @@ document.addEventListener('DOMContentLoaded', function() {
         elements.toggleSidebarButton.addEventListener("click", () => {
             elements.sidebar.classList.toggle("collapsed");
         });
+    }
+
+    if (elements.toggleJumpsSidebarButton && elements.chatJumpsSidebar) {
+        elements.toggleJumpsSidebarButton.addEventListener("click", () => {
+            elements.chatJumpsSidebar.style.display = "block";
+        });
+    }
+
+    if (elements.closeJumpsSidebarButton && elements.chatJumpsSidebar) {
+        elements.closeJumpsSidebarButton.addEventListener("click", () => {
+            elements.chatJumpsSidebar.style.display = "none";
+        });
+    }
+
+    if (elements.exportButton && elements.exportOptions) {
+        elements.exportButton.addEventListener("click", showExportOptions);
     }
 
     if (elements.dataChamberButton && elements.dataChamber) {
