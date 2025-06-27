@@ -220,7 +220,7 @@ body {
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  background-color: rgb(6, 27, 43);
+  background-color: rgb(8, 30, 50);
   margin-left: 0;
   margin-right: 0;
   transition: margin 0.3s;
@@ -345,7 +345,7 @@ body {
   overflow-y: auto;
   margin-bottom: 20px;
   padding: 15px;
-  background: #f9f9f9;
+  background: rgb(6, 27, 43);
   border-radius: 8px;
   display: flex;
   flex-direction: column;
