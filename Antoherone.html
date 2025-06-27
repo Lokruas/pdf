@@ -8,105 +8,194 @@
 </head>
 <body>
   <div id="app">
-    <!-- Linke Sidebar - Chats -->
+    <!-- Linke Sidebar - Chats und Verlauf -->
     <aside id="sidebar" class="collapsed">
       <div class="sidebar-padding">
         <h2>Chats</h2>
-        <ul id="chat-list"></ul>
-        <button id="new-chat-button">➕ Neuer Chat</button>
+        <ul id="chat-list">
+          <!-- Chat-Einträge werden hier dynamisch eingefügt -->
+          <li class="chat-item active" data-chat-id="chat-1">
+            <span class="chat-name">Erster Chat</span>
+            <span class="chat-date">01.01.2023</span>
+          </li>
+          <li class="chat-item" data-chat-id="chat-2">
+            <span class="chat-name">Zweiter Chat</span>
+            <span class="chat-date">02.01.2023</span>
+          </li>
+        </ul>
+        <button id="new-chat-button" class="new-chat-btn">
+          <span>➕</span> Neuer Chat
+        </button>
         
-        <!-- Chatverlauf-Sidebar als Unterbereich -->
+        <!-- Chatverlauf als Unterbereich -->
         <div id="chat-history-container">
           <h2>Chatverlauf</h2>
-          <ul id="chat-jumps-list"></ul>
+          <ul id="chat-jumps-list">
+            <!-- Verlaufseinträge werden hier dynamisch eingefügt -->
+            <li class="jump-item" data-message-index="0">
+              <span class="jump-item-content">Wie kann ich helfen?</span>
+              <div class="jump-item-actions">
+                <button class="edit-jump" title="Titel bearbeiten">✏️</button>
+                <button class="delete-jump" title="Aus Verlauf löschen">🗑️</button>
+              </div>
+            </li>
+          </ul>
         </div>
       </div>
     </aside>
 
-    <!-- Toggle Sidebar Buttons -->
-    <button id="toggle-sidebar" class="sidebar-toggle">☰</button>
-    <button id="toggle-questionnaire-sidebar" class="sidebar-toggle right">+</button>
+    <!-- Toggle-Buttons für Sidebars -->
+    <button id="toggle-sidebar" class="sidebar-toggle left-toggle">
+      <span>☰</span>
+    </button>
+    <button id="toggle-questionnaire-sidebar" class="sidebar-toggle right-toggle">
+      <span>+</span>
+    </button>
 
     <!-- Hauptbereich -->
     <div id="main-area">
       <!-- Header mit Banner -->
       <header id="chat-header">
-        <img src="./banner.jpg" alt="Banner" class="banner-icon" />
+        <img src="./banner.jpg" alt="V.I.T.A.L Banner" class="banner-icon" />
+        <h1>V.I.T.A.L - Virtueller Intelligenter Textbasierter Assistent</h1>
       </header>
 
-      <!-- Chatcontainer -->
+      <!-- Chat-Container -->
       <section id="chat-container">
         <div class="chat-header-row">
-          <h1>Hey, ich bin V.I.T.A.L. Wie kann ich dir helfen?</h1>
+          <h2>Aktueller Chat: <span id="current-chat-title">Erster Chat</span></h2>
           <div class="header-buttons">
-            <button id="export-button" title="Exportieren">📤 Export</button>
+            <button id="export-button" class="export-btn" title="Chat exportieren">
+              <span>📤</span> Export
+            </button>
           </div>
         </div>
 
-        <!-- Export-Formate -->
-        <div id="export-options" style="display: none;">
-          <button class="export-option" data-format="json">JSON</button>
-          <button class="export-option" data-format="txt">TXT</button>
-          <button class="export-option" data-format="csv">CSV</button>
+        <!-- Export-Optionen (ausgeblendet) -->
+        <div id="export-options" class="export-options-container" style="display: none;">
+          <button class="export-option" data-format="json">
+            <span>📄</span> JSON
+          </button>
+          <button class="export-option" data-format="txt">
+            <span>📝</span> TXT
+          </button>
+          <button class="export-option" data-format="csv">
+            <span>📊</span> CSV
+          </button>
         </div>
 
-        <!-- Verlauf -->
-        <div id="chat-output"></div>
+        <!-- Chat-Nachrichtenbereich -->
+        <div id="chat-output" class="chat-messages-container">
+          <!-- Nachrichten werden hier dynamisch eingefügt -->
+          <div class="message bot">
+            <div class="message-header">
+              <div class="bot-avatar">V</div>
+              <div class="bot-name">V.I.T.A.L</div>
+            </div>
+            <div class="message-content">
+              Hallo! Ich bin V.I.T.A.L, Ihr virtueller Assistent. Wie kann ich Ihnen helfen?
+            </div>
+            <div class="message-time">10:00</div>
+          </div>
+        </div>
 
-        <!-- Eingabefeld + Senden -->
-        <div id="input-area">
-          <textarea id="user-input" placeholder="Frage eingeben..." autofocus></textarea>
-          <button id="send-button">Senden</button>
+        <!-- Eingabebereich -->
+        <div id="input-area" class="message-input-container">
+          <textarea id="user-input" class="message-input" 
+                    placeholder="Geben Sie hier Ihre Nachricht ein..." 
+                    autofocus></textarea>
+          <button id="send-button" class="send-btn">
+            <span>Senden</span>
+          </button>
         </div>
       </section>
     </div>
 
-    <!-- Fragebogen Sidebar -->
+    <!-- Rechte Sidebar - Fragebogen -->
     <aside id="questionnaire-sidebar" class="collapsed">
       <div class="sidebar-header">
         <h2>Fragebogen</h2>
-        <button class="close-sidebar">×</button>
+        <button class="close-sidebar">
+          <span>×</span>
+        </button>
       </div>
       
       <div class="sidebar-content">
         <!-- Standard-Felder -->
         <div class="data-pair-container">
-          <input type="text" class="data-key-input" placeholder="Feldname (z.B. 'Name')">
-          <input type="text" class="data-value-input" placeholder="Wert">
+          <input type="text" class="data-key-input" 
+                 placeholder="Feldname (z.B. 'Name')" value="Name">
+          <input type="text" class="data-value-input" 
+                 placeholder="Wert">
         </div>
         <div class="data-pair-container">
-          <input type="text" class="data-key-input" placeholder="Feldname (z.B. 'Email')">
-          <input type="text" class="data-value-input" placeholder="Wert">
+          <input type="text" class="data-key-input" 
+                 placeholder="Feldname (z.B. 'Email')" value="Email">
+          <input type="text" class="data-value-input" 
+                 placeholder="Wert">
         </div>
         <div class="data-pair-container">
-          <input type="text" class="data-key-input" placeholder="Feldname (z.B. 'Telefon')">
-          <input type="text" class="data-value-input" placeholder="Wert">
+          <input type="text" class="data-key-input" 
+                 placeholder="Feldname (z.B. 'Telefon')" value="Telefon">
+          <input type="text" class="data-value-input" 
+                 placeholder="Wert">
+        </div>
+        
+        <!-- Dynamisch hinzugefügte Felder -->
+        <div class="data-pair-container">
+          <input type="text" class="data-key-input" 
+                 placeholder="Feldname">
+          <input type="text" class="data-value-input" 
+                 placeholder="Wert">
+          <button class="remove-field-button">×</button>
         </div>
         
         <!-- Großes Feedback-Feld -->
         <div class="feedback-container">
-          <textarea class="feedback-input" placeholder="Ihr Feedback... (mindestens 5 Sätze)"></textarea>
+          <label for="feedback-input">Ihr Feedback:</label>
+          <textarea id="feedback-input" class="feedback-input" 
+                    placeholder="Bitte teilen Sie uns Ihre Meinung mit (mindestens 5 Sätze)..."></textarea>
+          <div class="feedback-counter">0/2000 Zeichen</div>
         </div>
         
-        <!-- Buttons -->
+        <!-- Steuerungs-Buttons -->
         <div class="sidebar-controls">
-          <button id="add-questionnaire-field" class="secondary-button">+ Feld hinzufügen</button>
-          <div>
-            <button id="questionnaire-cancel" class="secondary-button">Abbrechen</button>
-            <button id="questionnaire-save" class="primary-button">Speichern</button>
+          <button id="add-questionnaire-field" class="secondary-button add-field-btn">
+            <span>+</span> Feld hinzufügen
+          </button>
+          <div class="action-buttons">
+            <button id="questionnaire-cancel" class="secondary-button cancel-btn">
+              Abbrechen
+            </button>
+            <button id="questionnaire-save" class="primary-button save-btn">
+              Speichern
+            </button>
           </div>
         </div>
       </div>
     </aside>
 
-    <!-- Bearbeitungsdialog für Sprungtitel -->
+    <!-- Dialog zum Bearbeiten von Sprungtiteln -->
     <div id="edit-jump-title-dialog" class="edit-dialog" style="display: none;">
-      <h3>Titel bearbeiten</h3>
-      <input type="text" id="edit-jump-title-input">
-      <div class="edit-dialog-buttons">
-        <button id="save-jump-title">Speichern</button>
-        <button id="cancel-jump-title">Abbrechen</button>
+      <div class="dialog-content">
+        <h3>Titel bearbeiten</h3>
+        <input type="text" id="edit-jump-title-input" 
+               class="edit-title-input" 
+               placeholder="Neuen Titel eingeben">
+        <div class="edit-dialog-buttons">
+          <button id="save-jump-title" class="primary-button">
+            Speichern
+          </button>
+          <button id="cancel-jump-title" class="secondary-button">
+            Abbrechen
+          </button>
+        </div>
       </div>
+    </div>
+
+    <!-- Systemnachrichten-Toast -->
+    <div id="system-toast" class="toast-container" style="display: none;">
+      <div class="toast-message"></div>
     </div>
   </div>
 
