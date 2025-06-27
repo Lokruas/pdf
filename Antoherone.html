@@ -8,7 +8,7 @@
 </head>
 <body>
     <div id="app">
-        <!-- Linke Sidebar - Chatverlauf und Liste -->
+        <!-- Linke Sidebar - Chatliste -->
         <div id="sidebar" class="sidebar">
             <div class="sidebar-header">
                 <h2>Chatverlauf</h2>
@@ -27,14 +27,18 @@
                             <span class="chat-title">Vertragsberatung</span>
                             <span class="chat-date">Gestern</span>
                         </li>
+                        <li class="chat-item">
+                            <span class="chat-title">Allgemeine Fragen</span>
+                            <span class="chat-date">15.05.2023</span>
+                        </li>
                     </ul>
                 </div>
             </div>
         </div>
 
-        <!-- Hauptchatbereich -->
+        <!-- Hauptbereich -->
         <main id="main-content">
-            <!-- Chat-Header mit Banner -->
+            <!-- Header nur mit Bild -->
             <header id="chat-header" class="chat-header">
                 <div class="header-content">
                     <img src="assets/banner-icon.png" alt="Chat Banner" class="header-banner">
@@ -59,6 +63,22 @@
                     <div class="message user-message">
                         <div class="message-content">
                             <div class="message-text">Ich habe eine Frage zu meinem Vertrag</div>
+                        </div>
+                    </div>
+
+                    <!-- Weitere Beispielnachrichten -->
+                    <div class="message bot-message">
+                        <div class="message-avatar">
+                            <img src="assets/bot-avatar.png" alt="Bot Avatar">
+                        </div>
+                        <div class="message-content">
+                            <div class="message-text">Natürlich, zu welchem Vertrag genau haben Sie Fragen?</div>
+                        </div>
+                    </div>
+
+                    <div class="message user-message">
+                        <div class="message-content">
+                            <div class="message-text">Es geht um meinen Mobilfunkvertrag, Vertragsnummer 123456</div>
                         </div>
                     </div>
                 </div>
@@ -89,6 +109,11 @@
                         <input type="text" class="form-input field-value" placeholder="Wert">
                         <button class="remove-field-btn">&times;</button>
                     </div>
+                    <div class="form-row">
+                        <input type="text" class="form-input field-name" placeholder="Feldname">
+                        <input type="text" class="form-input field-value" placeholder="Wert">
+                        <button class="remove-field-btn">&times;</button>
+                    </div>
                 </div>
                 <div class="form-actions">
                     <button id="add-field-btn" class="secondary-btn">Feld hinzufügen</button>
@@ -108,7 +133,6 @@
 
         <!-- Skripte -->
         <script src="Antoherone.js"></script>
-        <
     </div>
 </body>
 </html>
