@@ -364,20 +364,27 @@ body {
 
 /* Stil für Benutzer-Nachrichten (rechts, blau-türkis) */
 .message-user {
-    background-color: #2dd4bf; /* Blau-türkis */
-    color: white; /* Weißer Text für besseren Kontrast */
+    background-color: #2dd4bf; /* Türkisblau */
+    color: white; /* Weißer Text für Kontrast */
     margin-left: auto; /* Rechtsbündig */
     border-radius: 18px 18px 0 18px; /* Abgerundete rechte Ecken */
-    align-self: flex-end; /* Für Flex-Container */
+    max-width: 80%; /* Maximale Breite */
+    padding: 15px; /* Innenabstand */
+    word-break: break-word; /* Zeilenumbruch */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Schatten */
 }
 
 /* Stil für Bot-Nachrichten (links, weiß) */
 .message-bot {
     background-color: white; /* Weißer Hintergrund */
-    color: #333; /* Dunkler Text */
+    color: #333; /* Dunkler Text für bessere Lesbarkeit */
     margin-right: auto; /* Linksbündig */
     border-radius: 18px 18px 18px 0; /* Abgerundete linke Ecken */
     border: 1px solid #e0e0e0; /* Leichter Rand für Abgrenzung */
+    max-width: 80%; /* Maximale Breite */
+    padding: 15px; /* Innenabstand */
+    word-break: break-word; /* Zeilenumbruch */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Schatten */
 }
 
 .message-header {
