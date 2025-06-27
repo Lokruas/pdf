@@ -7,8 +7,9 @@ document.addEventListener('DOMContentLoaded', function() {
     let chatCounter = 0;
     let waitingForFirstMessage = false;
     let jumpTitles = {};
-    let activeSidebar = null;
     const MAX_FEEDBACK_LENGTH = 2000;
+    let leftSidebarOpen = false;
+    let rightSidebarOpen = false;
 
     // ========== DOM-ELEMENTE ========== //
     const elements = {
@@ -65,44 +66,27 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // ========== SIDEBAR-STEUERUNG ========== //
-    function toggleSidebar(sidebarType) {
-        // Schließe die aktuell geöffnete Sidebar
-        if (activeSidebar && activeSidebar !== sidebarType) {
-            if (activeSidebar === 'main') {
-                elements.sidebar.classList.add('collapsed');
-            } else if (activeSidebar === 'questionnaire') {
-                elements.questionnaireSidebar.classList.add('collapsed');
-            }
-        }
-
-        // Öffne/Schließe die gewünschte Sidebar
-        if (sidebarType === 'main') {
-            elements.sidebar.classList.toggle('collapsed');
-            activeSidebar = elements.sidebar.classList.contains('collapsed') ? null : 'main';
-        } 
-        else if (sidebarType === 'questionnaire') {
-            elements.questionnaireSidebar.classList.toggle('collapsed');
-            activeSidebar = elements.questionnaireSidebar.classList.contains('collapsed') ? null : 'questionnaire';
-            
-            // Initialisiere den Fragebogen beim Öffnen
-            if (activeSidebar === 'questionnaire') {
-                initializeQuestionnaire();
-            }
-        }
-
-        // Anpassung des Hauptbereichs bei geöffneter Sidebar
-        adjustMainArea();
+    function toggleLeftSidebar() {
+        leftSidebarOpen = !leftSidebarOpen;
+        elements.sidebar.classList.toggle('collapsed', !leftSidebarOpen);
+        adjustMainAreaMargins();
     }
 
-    function adjustMainArea() {
-        if (activeSidebar === 'main') {
-            elements.mainArea.style.marginLeft = '250px';
-        } else if (activeSidebar === 'questionnaire') {
-            elements.mainArea.style.marginRight = '280px';
-        } else {
-            elements.mainArea.style.marginLeft = '0';
-            elements.mainArea.style.marginRight = '0';
+    function toggleRightSidebar() {
+        rightSidebarOpen = !rightSidebarOpen;
+        elements.questionnaireSidebar.classList.toggle('collapsed', !rightSidebarOpen);
+        
+        // Initialisiere den Fragebogen beim Öffnen
+        if (rightSidebarOpen) {
+            initializeQuestionnaire();
         }
+        
+        adjustMainAreaMargins();
+    }
+
+    function adjustMainAreaMargins() {
+        elements.mainArea.style.marginLeft = leftSidebarOpen ? '320px' : '0';
+        elements.mainArea.style.marginRight = rightSidebarOpen ? '320px' : '0';
     }
 
     // ========== CHAT-VERWALTUNG ========== //
@@ -235,16 +219,15 @@ document.addEventListener('DOMContentLoaded', function() {
         if (role === 'user') {
             messageDiv.innerHTML = `
                 <div class="message-content">${content}</div>
-                <div class="message-time">${formatTime(new Date())}</div>
             `;
         } else {
             messageDiv.innerHTML = `
                 <div class="message-header">
-                    <div class="bot-avatar">V</div>
-                    <div class="bot-name">V.I.T.A.L</div>
+                    <div class="bot-avatar">
+                        <img src="./Profil.png" alt="V.I.T.A.L" />
+                    </div>
                 </div>
                 <div class="message-content">${content}</div>
-                <div class="message-time">${formatTime(new Date())}</div>
             `;
         }
 
@@ -252,7 +235,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function generateBotResponse(userMessage) {
-        // Hier würde normalerweise die KI-Antwort generiert werden
         const responses = [
             "Ich habe Ihre Frage erhalten: '" + userMessage + "'. Lassen Sie mich das für Sie recherchieren.",
             "Interessante Frage: '" + userMessage + "'. Hier ist was ich dazu weiß...",
@@ -357,11 +339,10 @@ document.addEventListener('DOMContentLoaded', function() {
         const feedbackContainer = document.createElement('div');
         feedbackContainer.className = 'feedback-container';
         feedbackContainer.innerHTML = `
-            <label for="feedback-input">Ihr Feedback:</label>
             <textarea id="feedback-input" class="feedback-input" 
-                      placeholder="Bitte teilen Sie uns Ihre Meinung mit (mindestens 5 Sätze)..."
+                      placeholder="Bitte teilen Sie uns Ihre Meinung mit..."
                       maxlength="${MAX_FEEDBACK_LENGTH}">${chat.questionnaire.feedback}</textarea>
-            <div class="feedback-counter">0/${MAX_FEEDBACK_LENGTH} Zeichen</div>
+            <div class="feedback-counter">${chat.questionnaire.feedback.length}/${MAX_FEEDBACK_LENGTH} Zeichen</div>
         `;
         elements.questionnaireContent.appendChild(feedbackContainer);
         
@@ -390,7 +371,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // Event-Listener für neue Buttons
         document.getElementById('add-questionnaire-field').addEventListener('click', addNewQuestionnaireField);
         document.getElementById('questionnaire-save').addEventListener('click', saveQuestionnaire);
-        document.getElementById('questionnaire-cancel').addEventListener('click', () => toggleSidebar('questionnaire'));
+        document.getElementById('questionnaire-cancel').addEventListener('click', toggleRightSidebar);
     }
 
     function addQuestionnaireField(key = '', value = '', index = -1) {
@@ -443,7 +424,7 @@ document.addEventListener('DOMContentLoaded', function() {
         };
         
         alert('Fragebogen wurde erfolgreich gespeichert!');
-        toggleSidebar('questionnaire');
+        toggleRightSidebar();
     }
 
     // ========== HILFSFUNKTIONEN ========== //
@@ -484,8 +465,8 @@ document.addEventListener('DOMContentLoaded', function() {
         });
         
         // Sidebar-Steuerung
-        elements.toggleSidebarButton.addEventListener('click', () => toggleSidebar('main'));
-        elements.toggleQuestionnaireButton.addEventListener('click', () => toggleSidebar('questionnaire'));
+        elements.toggleSidebarButton.addEventListener('click', toggleLeftSidebar);
+        elements.toggleQuestionnaireButton.addEventListener('click', toggleRightSidebar);
         
         // Chat-Verwaltung
         elements.newChatButton.addEventListener('click', () => createChat());
@@ -502,14 +483,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 exportChat(format);
                 elements.exportOptions.style.display = 'none';
             });
-        });
-        
-        // Klick außerhalb der Export-Optionen schließt das Menü
-        document.addEventListener('click', (e) => {
-            if (!elements.exportOptions.contains(e.target) && 
-                e.target !== elements.exportButton) {
-                elements.exportOptions.style.display = 'none';
-            }
         });
     }
 
