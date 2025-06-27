@@ -362,11 +362,14 @@ body {
 }
 
 .message-user {
-  background-color: #2dd4bf;
+  background-color: #2dd4bf; /* Blautürkis */
   color: white;
-  margin-left: auto;
+  margin-left: auto; /* Rechtsbündig */
   border-radius: 18px 18px 0 18px;
-  align-self: flex-end;
+  max-width: 80%;
+  padding: 15px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  align-self: flex-end; /* Wichtig für Flex-Container */
 }
 
 .message-bot {
