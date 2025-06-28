@@ -225,6 +225,7 @@ body {
   margin-left: 0;
   margin-right: 0;
   transition: margin 0.3s;
+  z-index: 1;
 }
 
 /* Header */
