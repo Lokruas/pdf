@@ -237,7 +237,6 @@ body {
   align-items: center;
   justify-content: center;
   color: white;
-  margin: 0 auto; /* Neu: Zentriert den Header */
 }
 
 #chat-header h1 {
@@ -250,8 +249,6 @@ body {
   width: 250px;
   border-radius: 50%;
   object-fit: cover;
-  margin: 0 auto; /* Neu: Zentriert das Bild */
-  display: block; /* Neu: Für korrekte margin-auto Funktionalität */
 }
 
 /* Chat Container */
@@ -752,10 +749,6 @@ body {
     margin-left: 0;
     margin-right: 0;
     padding-top: 80px;
-    margin-left: 0;
-    margin-right: 0;
-    transition: margin 0.3s;
-    align-items: center; /* Zentriert den gesamten Inhalt */
   }
 
   .chat-header-row {
