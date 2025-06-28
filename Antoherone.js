@@ -213,7 +213,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function addMessageToDisplay(role, content, index) {
         const messageDiv = document.createElement('div');
-        messageDiv.className = `message ${role}`;
+        messageDiv.className = `message message-${role}`;
         messageDiv.dataset.messageIndex = index;
 
         if (role === 'user') {
@@ -549,6 +549,12 @@ document.addEventListener('DOMContentLoaded', function() {
     function initialize() {
         initializeElements();
         setupEventListeners();
+        
+        // Standardmäßig beide Sidebars geschlossen
+        elements.sidebar.classList.add('collapsed');
+        elements.questionnaireSidebar.classList.add('collapsed');
+        leftSidebarOpen = false;
+        rightSidebarOpen = false;
         
         // Ersten Chat erstellen
         createChat('Mein erster Chat');
