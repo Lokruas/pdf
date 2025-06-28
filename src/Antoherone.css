@@ -741,6 +741,7 @@ body {
 
   .sidebar-toggle.right-toggle {
     right: 20px;
+    z-index: 1001;
   }
 
   #main-area {
