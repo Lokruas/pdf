@@ -49,6 +49,7 @@ body {
 
 .sidebar-toggle.right-toggle {
   right: 10px;
+  z-index: 1005;
 }
 
 /* Gemeinsame Sidebar-Styles */
