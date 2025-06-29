@@ -251,6 +251,7 @@ body {
   width: 250px;
   border-radius: 50%;
   object-fit: cover;
+  margin-left: 360px;
 }
 
 /* Chat Container */
@@ -844,10 +845,10 @@ body {
     transform: translateX(var(--sidebar-width)) !important;
 }
 /* Automatische Anpassung bei geöffneter rechter Sidebar */
-body.right-sidebar-open #main-area {
+body.right-sidebar-open #chat-container {
   margin-right: var(--sidebar-width);
 }
-.right-sidebar-open #main-area {
+.right-sidebar-open #chat-container {
   margin-right: 360px;
   transition: margin-right 0.3s ease;
 }
