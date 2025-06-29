@@ -848,7 +848,7 @@ body.right-sidebar-open #main-area {
   margin-right: var(--sidebar-width);
 }
 .right-sidebar-open #chat-container {
-  margin-right: 320px;
+  margin-right: 360px;
   transition: margin-right 0.3s ease;
 }
 
