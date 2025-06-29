@@ -215,16 +215,50 @@ document.addEventListener('DOMContentLoaded', function() {
 
         if (role === 'user') {
             addJumpItem(chats[currentChatId].messages.length - 1, content);
-            
-            // Simulierte Bot-Antwort
-            setTimeout(() => {
-                const botResponse = generateBotResponse(content);
-                addMessage('bot', botResponse);
-            }, 500);
+            sendMessageToAPI(content);
+
         }
 
         elements.chatOutput.scrollTop = elements.chatOutput.scrollHeight;
     }
+    async function sendMessageToAPI(userText) {
+        try {
+            const response = await fetch("http://localhost:8000/api/chat", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ query: userText }),
+            });
+    
+            const data = await response.json();
+    
+            const botResponseIndex = chats[currentChatId].messages.length;
+            const botMessage = {
+                role: "bot",
+                content: data.response,
+                timestamp: new Date(),
+                id: `msg-${Date.now()}`
+            };
+    
+            chats[currentChatId].messages.push(botMessage);
+            addMessageToDisplay("bot", data.response, botResponseIndex);
+            elements.chatOutput.scrollTop = elements.chatOutput.scrollHeight;
+        } catch (error) {
+            console.error("Fehler beim Abrufen der Antwort:", error);
+            const fallbackText = "Fehler beim Verbinden mit dem Server. :(";
+    
+            const botResponseIndex = chats[currentChatId].messages.length;
+            chats[currentChatId].messages.push({
+                role: "bot",
+                content: fallbackText,
+                timestamp: new Date(),
+                id: `msg-${Date.now()}`
+            });
+            addMessageToDisplay("bot", fallbackText, botResponseIndex);
+        }
+    }
+
 
     function addMessageToDisplay(role, content, index) {
         const messageDiv = document.createElement('div');
@@ -247,17 +281,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         elements.chatOutput.appendChild(messageDiv);
-    }
-
-    function generateBotResponse(userMessage) {
-        const responses = [
-            "Ich habe Ihre Frage erhalten: '" + userMessage + "'. Lassen Sie mich das für Sie recherchieren.",
-            "Interessante Frage: '" + userMessage + "'. Hier ist was ich dazu weiß...",
-            "Danke für Ihre Nachricht. Zu '" + userMessage + "' kann ich folgendes sagen...",
-            "'" + userMessage + "' ist ein wichtiges Thema. Hier sind die relevanten Informationen..."
-        ];
-        
-        return responses[Math.floor(Math.random() * responses.length)];
     }
 
     // ========== CHAT-VERLAUF (JUMPS) ========== //
