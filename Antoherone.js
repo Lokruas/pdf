@@ -67,21 +67,37 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // ========== SIDEBAR-STEUERUNG ========== //
     function toggleLeftSidebar() {
-        leftSidebarOpen = !leftSidebarOpen;
-        elements.sidebar.classList.toggle('collapsed', !leftSidebarOpen);
-        adjustMainAreaMargins();
+      leftSidebarOpen = !leftSidebarOpen;
+      elements.sidebar.classList.toggle('collapsed', !leftSidebarOpen);
+      updateMainAreaClasses();
     }
-
+    
     function toggleRightSidebar() {
-        rightSidebarOpen = !rightSidebarOpen;
-        elements.questionnaireSidebar.classList.toggle('collapsed', !rightSidebarOpen);
-        
-        // Initialisiere den Fragebogen beim Öffnen
-        if (rightSidebarOpen) {
-            initializeQuestionnaire();
-        }
-        
-        adjustMainAreaMargins();
+      rightSidebarOpen = !rightSidebarOpen;
+      elements.questionnaireSidebar.classList.toggle('collapsed', !rightSidebarOpen);
+      updateMainAreaClasses();
+      
+      if (rightSidebarOpen) {
+        initializeQuestionnaire();
+      }
+    }
+    
+    function updateMainAreaClasses() {
+      // Alle Klassen entfernen
+      elements.mainArea.classList.remove(
+        'left-sidebar-open', 
+        'right-sidebar-open', 
+        'both-sidebars-open'
+      );
+      
+      // Neue Klassen basierend auf dem Zustand hinzufügen
+      if (leftSidebarOpen && rightSidebarOpen) {
+        elements.mainArea.classList.add('both-sidebars-open');
+      } else if (leftSidebarOpen) {
+        elements.mainArea.classList.add('left-sidebar-open');
+      } else if (rightSidebarOpen) {
+        elements.mainArea.classList.add('right-sidebar-open');
+      }
     }
 
     function adjustMainAreaMargins() {
