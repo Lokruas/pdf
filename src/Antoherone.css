@@ -252,7 +252,7 @@ body {
   border-radius: 50%;
   object-fit: cover;
   margin-lef: auto;
-  margin-right: 40px;
+  margin-right: 300px;
 }
 
 /* Chat Container */
@@ -601,6 +601,8 @@ body {
   border-radius: 6px;
   cursor: pointer;
   font-weight: bold;
+  margin-top: 20px;
+  margin-left: auto;
 }
 
 .action-buttons {
@@ -617,6 +619,7 @@ body {
   cursor: pointer;
   transition: all 0.2s;
   font-weight: bold;
+  margin-right: 100px;
 }
 
 .primary-button:hover {
@@ -847,7 +850,7 @@ body {
 #questionnaire-sidebar.collapsed {
     transform: translateX(var(--sidebar-width)) !important;
 }
-/* Automatische Anpassung bei geöffneter rechter Sidebar */
+
 
 
 
