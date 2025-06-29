@@ -1,10 +1,10 @@
-<!DOCTYPE html>More actions
+<!DOCTYPE html>
 <html lang="de">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>V.I.T.A.L</title>
-  <link rel="stylesheet" href="./style.css" />
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <div id="app">
@@ -24,17 +24,14 @@
     <div id="main-area">
       <!-- Header mit Banner -->
       <header id="chat-header">
-        <img src="./banner.jpg" alt="Banner" class="banner-icon" />
+        <img src="banner.jpg" alt="Banner" class="banner-icon" />
       </header>
 
       <!-- Chatcontainer -->
       <section id="chat-container">
         <div class="chat-header-row">
           <h1>Hey, ich bin V.I.T.A.L. Wie kann ich dir helfen?</h1>
-          <div class="header-buttons">
-            <button id="export-button" title="Exportieren">📤 Export</button>
-            <button id="data-chamber-button" title="Datenkammer öffnen">+ Daten</button>
-          </div>
+          <button id="export-button" title="Exportieren">📤</button>
         </div>
 
         <!-- Export-Formate -->
@@ -49,13 +46,13 @@
 
         <!-- Eingabefeld + Senden -->
         <div id="input-area">
-          <textarea id="user-input" placeholder="Frage eingeben..." autofocus></textarea>
+          <textarea id="user-input" placeholder="Frage eingeben..."></textarea>
           <button id="send-button">Senden</button>
         </div>
       </section>
     </div>
 
-    <!-- Rechte Sidebar - Chatsprünge -->
+    <!-- Rechte Sidebar - Chatsprünge (nur für Organisation) -->
     <aside id="chat-jumps-sidebar" class="collapsed">
       <div class="sidebar-header">
         <h2>Chatverlauf</h2>
@@ -64,7 +61,7 @@
       <ul id="chat-jumps-list"></ul>
     </aside>
 
-    <!-- Bearbeitungsdialog für Sprungtitel -->
+    <!-- Dialog für Titelbearbeitung (nur für Sidebar) -->
     <div id="edit-jump-title-dialog" class="edit-dialog" style="display: none;">
       <h3>Titel bearbeiten</h3>
       <input type="text" id="edit-jump-title-input">
@@ -73,59 +70,8 @@
         <button id="cancel-jump-title">Abbrechen</button>
       </div>
     </div>
-
-    <!-- Datenkammer Modal -->
-    <div id="data-chamber">
-      <div id="data-chamber-content">
-        <div id="data-chamber-header">
-          <img src="Profil.png" alt="Profil" />
-          <h2>Datenkammer</h2>
-          <button id="data-chamber-close">×</button>
-        </div>
-
-        <div id="data-chamber-info" style="display: none;">
-          <h3>Informationen</h3>
-          <p>Daten werden als JSON gespeichert und mit dem aktuellen Lead verknüpft.</p>
-        </div>
-
-        <div id="data-chamber-body">
-          <!-- 5 Feldpaare als Standard -->
-          <div class="data-pair-container">
-            <input type="text" class="data-key-input" placeholder="Feldname">
-            <input type="text" class="data-value-input" placeholder="Wert">
-          </div>
-          <div class="data-pair-container">
-            <input type="text" class="data-key-input" placeholder="Feldname">
-            <input type="text" class="data-value-input" placeholder="Wert">
-          </div>
-          <div class="data-pair-container">
-            <input type="text" class="data-key-input" placeholder="Feldname">
-            <input type="text" class="data-value-input" placeholder="Wert">
-          </div>
-          <div class="data-pair-container">
-            <input type="text" class="data-key-input" placeholder="Feldname">
-            <input type="text" class="data-value-input" placeholder="Wert">
-          </div>
-          <div class="data-pair-container">
-            <input type="text" class="data-key-input" placeholder="Feldname">
-            <input type="text" class="data-value-input" placeholder="Wert">
-          </div>
-        </div>
-        <div class="bot-avatar">
-          <img src="./Profil.png" alt="V.I.T.A.L" />
-        </div>
-
-        <div id="data-chamber-controls">
-          <button id="data-chamber-cancel" class="secondary-button">Abbrechen</button>
-          <div>
-            <button id="data-chamber-info-button" class="info-button">ℹ Info</button>
-            <button id="data-chamber-save" class="primary-button">💾 Speichern</button>
-          </div>
-        </div>
-      </div>
-    </div>
   </div>
 
-  <script src="./script.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
