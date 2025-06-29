@@ -251,7 +251,7 @@ body {
   width: 250px;
   border-radius: 50%;
   object-fit: cover;
-  margin-lef: auto;
+  margin-left: auto;
   margin-right: 300px;
 }
 
@@ -401,8 +401,6 @@ body {
 }
 
 .bot-avatar {
-  width: 12px;
-  height: 12px;
   width: 40px;
   height: 40px;
   background-color: transparent;
@@ -471,7 +469,6 @@ body {
 
 #send-button:hover {
   background-color: #0c2342;
-  z-
 }
 
 /* Fragebogen Sidebar */
@@ -831,13 +828,13 @@ body {
 
   /* Für beide Sidebars */
 [id$="-sidebar"] {
-    transition: transform 0.3s ease-in-out, opacity 0.2s ease-in-out !important;
+    transition: transform 0.3s ease-in-out, opacity 0.2s ease-in-out;
     opacity: 1;
 }
 
 /* Linke Sidebar */
 #sidebar.collapsed {
-    transform: translateX(calc(var(--sidebar-width) * -1)) !important;
+    transform: translateX(calc(var(--sidebar-width) * -1));
     opacity: 0;
 }
 
@@ -847,9 +844,6 @@ body {
     opacity: 0;
 }
 
-#questionnaire-sidebar.collapsed {
-    transform: translateX(var(--sidebar-width)) !important;
-}
 
 
 
