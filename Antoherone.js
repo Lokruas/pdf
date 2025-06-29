@@ -117,9 +117,9 @@ document.addEventListener('DOMContentLoaded', function() {
             jumpTitles: {},
             questionnaire: {
                 fields: [
-                    { key: 'Name', value: '' },
-                    { key: 'Email', value: '' },
-                    { key: 'Telefon', value: '' }
+                    { key: '', value: '' },
+                    { key: '', value: '' },
+                    { key: '', value: '' }
                 ],
                 feedback: ''
             }
@@ -355,7 +355,7 @@ document.addEventListener('DOMContentLoaded', function() {
         feedbackContainer.className = 'feedback-container';
         feedbackContainer.innerHTML = `
             <textarea id="feedback-input" class="feedback-input" 
-                      placeholder="Bitte teilen Sie uns Ihre Meinung mit..."
+                      placeholder="Geben Sie hier weiteres Gesprächsfeedback ein..."
                       maxlength="${MAX_FEEDBACK_LENGTH}">${chat.questionnaire.feedback}</textarea>
             <div class="feedback-counter">${chat.questionnaire.feedback.length}/${MAX_FEEDBACK_LENGTH} Zeichen</div>
         `;
