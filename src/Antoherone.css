@@ -251,7 +251,6 @@ body {
   width: 250px;
   border-radius: 50%;
   object-fit: cover;
-  margin-right: 360px;
 }
 
 /* Chat Container */
@@ -260,7 +259,7 @@ body {
   display: flex;
   flex-direction: column;
   padding: 20px;
-  max-width: 1200px; /* Maximale Breite festlegen */
+  max-width: 1100px; /* Maximale Breite festlegen */
   width: 100%;
   margin: 0 auto; /* Zentrierung */
   margin-left: 20px;
