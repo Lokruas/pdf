@@ -848,18 +848,6 @@ body {
     transform: translateX(var(--sidebar-width)) !important;
 }
 /* Automatische Anpassung bei geöffneter rechter Sidebar */
-body.right-sidebar-open #main-area {
-  margin-right: var(--sidebar-width);
-}
-.right-sidebar-open #main-area {
-  margin-right: 600px;
-  transition: margin-right 0.3s ease;
-}
 
-#chat-container {
-  transition: margin-right 0.3s ease;
-  width: 100%;
-  box-sizing: border-box;
-}
 
 
