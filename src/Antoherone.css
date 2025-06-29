@@ -843,3 +843,8 @@ body {
 #questionnaire-sidebar.collapsed {
     transform: translateX(var(--sidebar-width)) !important;
 }
+/* Automatische Anpassung bei geöffneter rechter Sidebar */
+body.right-sidebar-open #main-area {
+  margin-right: var(--sidebar-width);
+}
+
