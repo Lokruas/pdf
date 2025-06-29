@@ -83,22 +83,21 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     function updateMainAreaClasses() {
-      // Alle Klassen entfernen
-      elements.mainArea.classList.remove(
+      document.body.classList.remove(
         'left-sidebar-open', 
         'right-sidebar-open', 
         'both-sidebars-open'
       );
-      
-      // Neue Klassen basierend auf dem Zustand hinzufügen
+    
       if (leftSidebarOpen && rightSidebarOpen) {
-        elements.mainArea.classList.add('both-sidebars-open');
+        document.body.classList.add('both-sidebars-open');
       } else if (leftSidebarOpen) {
-        elements.mainArea.classList.add('left-sidebar-open');
+        document.body.classList.add('left-sidebar-open');
       } else if (rightSidebarOpen) {
-        elements.mainArea.classList.add('right-sidebar-open');
+        document.body.classList.add('right-sidebar-open');
       }
     }
+
 
     function adjustMainAreaMargins() {
         elements.mainArea.style.marginLeft = leftSidebarOpen ? '320px' : '0';
