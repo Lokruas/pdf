@@ -251,7 +251,7 @@ body {
   width: 250px;
   border-radius: 50%;
   object-fit: cover;
-  margin-right: 360px;
+  margin-right: 720px;
 }
 
 /* Chat Container */
@@ -849,7 +849,7 @@ body.right-sidebar-open #main-area {
   margin-right: var(--sidebar-width);
 }
 .right-sidebar-open #main-area {
-  margin-right: 500px;
+  margin-right: 600px;
   transition: margin-right 0.3s ease;
 }
 
