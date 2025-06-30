@@ -252,6 +252,7 @@ body {
   border-radius: 50%;
   object-fit: cover;
   margin-right: 190px;
+  margin-left: auto;
 }
 
 /* Chat Container */
